@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "233427404520",
+    "firebase_url": "https://waterreport-c9250.firebaseio.com",
+    "project_id": "waterreport-c9250",
+    "storage_bucket": "waterreport-c9250.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233427404520:android:d43fca04c425d037",
+        "android_client_info": {
+          "package_name": "edu.cs2340.gatech.waterreport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233427404520-ko4knedn380vk8j42pvtf33tt2a3kp36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwBsikLhSKsNa0u6Y9OOuaR2EEI5IU0KE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233427404520-ko4knedn380vk8j42pvtf33tt2a3kp36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
