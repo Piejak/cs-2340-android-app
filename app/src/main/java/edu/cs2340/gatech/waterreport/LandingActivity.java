@@ -33,4 +33,10 @@ public class LandingActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        FirebaseAuth.getInstance().signOut();
+        super.onBackPressed();
+    }
 }
