@@ -14,7 +14,6 @@ public class LandingActivity extends AppCompatActivity {
 
     private FirebaseUser mUser;
     private TextView mLandingText;
-    private Button mLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +21,8 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
         mLandingText = (TextView) findViewById(R.id.landing_text);
         Intent intent = getIntent();
-        String uid = intent.getStringExtra("FIREBASE_UID");
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mLandingText.setText(mUser.getEmail() + " was successfully logged in.");
-        mLogout = (Button) findViewById(R.id.logout_button);
     }
 
     public void logoutButtonPressed(View v) {
