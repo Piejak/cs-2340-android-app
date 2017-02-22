@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                             //the creation failed
                             Toast.makeText(LoginActivity.this, "Account creation failed", Toast.LENGTH_SHORT).show();
                         } else {
-                            Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                             startActivity(intent);
                         }
                     }

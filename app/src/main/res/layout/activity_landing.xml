@@ -10,6 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.cs2340.gatech.waterreport.LandingActivity">
 
+    <Button
+        android:text="Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
+        android:id="@+id/button3"
+        android:onClick="logoutButtonPressed (LandingActivity)" />
+
     <TextView
         android:text="Login successful"
         android:layout_width="wrap_content"
@@ -19,12 +29,12 @@
         android:id="@+id/landing_text" />
 
     <Button
-        android:text="Logout"
+        android:text="Your Profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp"
-        android:id="@+id/logout_button"
-        android:onClick="logoutButtonPressed" />
+        android:id="@+id/profile_button"
+        android:layout_marginTop="49dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/landing_text"
+        android:onClick="profileButtonPressed" />
 </RelativeLayout>
