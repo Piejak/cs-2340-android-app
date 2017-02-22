@@ -10,7 +10,62 @@
         android:layout_width="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_height="410dp"></LinearLayout>
+        android:layout_height="410dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:id="@+id/profile_email" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/profile_password"
+            android:hint="Password" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_account_type" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/profile_name"
+            android:hint="Name" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/profile_age"
+            android:hint="Age" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/profile_address"
+            android:hint="Address" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/profile_affiliation"
+            android:hint="Affiliation" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -22,16 +77,17 @@
 
         <Button
             android:text="Change Profile"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.26"
-            android:id="@+id/changeProfileButton" />
+            android:id="@+id/changeProfileButton"
+            android:layout_width="125dp" />
 
         <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
+            android:text="Cancel"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
-            android:id="@+id/button10"
-            android:layout_weight="0.26" />
+            android:id="@+id/cancelProfileButton"
+            android:layout_weight="0.26"
+            android:onClick="cancelProfileButtonPressed" />
     </LinearLayout>
 </RelativeLayout>

@@ -17,26 +17,30 @@ import com.google.firebase.auth.FirebaseUser;
 public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseUser mUser;
-    private TextView mLandingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        mLandingText = (TextView) findViewById(R.id.landing_text);
         Intent intent = getIntent();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        mLandingText.setText(mUser.getEmail() + " was successfully logged in.");
+        // TODO fill all EditText hints with current user info which needs to be grabbed from firebase
+        // TODO profile_account_type needs to be set to default with profile_account_type.setPrompt(String accountType) pulled from firebase
     }
 
     public void changeProfileButtonPressed(View v) {
         Intent intent = new Intent(this, LandingActivity.class);
 
-
+        //TODO add to Firebase
 
         startActivity(intent);
     }
 
+    public void cancelProfileButtonPressed(View v) {
+        // maybe something to add for extra functionality
+        Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onBackPressed() {
