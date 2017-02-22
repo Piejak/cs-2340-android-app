@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:233427404520:android:d43fca04c425d037",
         "android_client_info": {
-          "package_name": "edu.cs2340.gatech.waterreport"
+          "package_name": "edu.cs2340.gatech.waterreport.controller"
         }
       },
       "oauth_client": [

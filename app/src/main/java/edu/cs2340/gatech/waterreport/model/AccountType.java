@@ -1,4 +1,4 @@
-package edu.cs2340.gatech.waterreport;
+package edu.cs2340.gatech.waterreport.model;
 
 /**
  * Created by Hui Li on 2/21/2017.

@@ -1,4 +1,4 @@
-package edu.cs2340.gatech.waterreport;
+package edu.cs2340.gatech.waterreport.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
