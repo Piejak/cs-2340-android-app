@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         mEmailView.setText(mUser.getEmail(), TextView.BufferType.EDITABLE);
 
         //setting up spinner
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter(this,
+        ArrayAdapter<AccountType> spinnerAdapter = new ArrayAdapter<AccountType>(this,
                 android.R.layout.simple_spinner_item,
                 AccountType.values()) {
                 // this is so it hides the DEFAULT enum
@@ -85,12 +85,11 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get UserInformation object and use the values to update the UI
                 userInformation = dataSnapshot.getValue(UserInformation.class);
-                System.out.println(userInformation);
+                // FIXME the fields in userInformation is all null.
+                System.out.println(userInformation.toString());
                 if (userInformation != null) {
-                    // FIXME i think android doesn't care what's inputted
-                    // what's below is permanent to the text views
                     mNameView.setText(userInformation.getRealName(), TextView.BufferType.EDITABLE);
-                    mAgeView.setText((userInformation.getAge() == null) ? userInformation.getAge().toString(): null, TextView.BufferType.EDITABLE);
+                    mAgeView.setText((userInformation.getAge() != null) ? userInformation.getAge().toString(): null, TextView.BufferType.EDITABLE);
                     mAddressView.setText(userInformation.getAddress(), TextView.BufferType.EDITABLE);
                     mAffiliationView.setText(userInformation.getAffiliation(), TextView.BufferType.EDITABLE);
                     mAccountTypeSpinner.setSelection(userInformation.getAccountType().ordinal());
@@ -114,16 +113,23 @@ public class ProfileActivity extends AppCompatActivity {
         if (userInformation == null) {
             userInformation = new UserInformation();
         }
+        if (mAgeView.getText().length() != 0) {
+           userInformation.setAge(Integer.parseInt(mAgeView.getText().toString()));
+        }
         userInformation.updateAllFields(
                 mNameView.getText().toString(),
-                Integer.parseInt(mAgeView.getText().toString()),
+                //Integer.parseInt(mAgeView.getText().toString()),
                 mAddressView.getText().toString(),
                 mAffiliationView.getText().toString(),
                 mAccountTypeSpinner.getSelectedItem().toString()
         );
+        //System.out.println(userInformation.toString());
         mDatabase.child("users").child(mUser.getUid()).setValue(userInformation);
         mUser.updateEmail(mEmailView.getText().toString());
-        mUser.updatePassword(mPasswordView.getText().toString());
+        if (mPasswordView.getText().length() != 0) {
+            //System.out.println("password is " + mPasswordView.getText());
+            mUser.updatePassword(mPasswordView.getText().toString());
+        }
         startActivity(intent);
     }
 

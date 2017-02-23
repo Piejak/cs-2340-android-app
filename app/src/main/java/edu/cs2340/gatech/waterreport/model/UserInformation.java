@@ -46,23 +46,27 @@ public class UserInformation {
 
     public AccountType getAccountType() {
         if (this.type == null) {
-            return this.type = AccountType.DEFAULT;
+            this.type = AccountType.DEFAULT;
         }
-        return type;
+        return this.type;
     }
     public void setAccountType(String type) {
-        if (this.type == null) {
+        if (this.type == null || type == "") {
             this.type = AccountType.DEFAULT;
         }
         this.type.setName(type);
     }
 
-    public void updateAllFields(String name, Integer age, String address, String affiliation,
+    public void updateAllFields(String name, String address, String affiliation,
                                 String type) {
         setRealName(name);
-        setAge(age);
+        //setAge(age);
         setAddress(address);
         setAffiliation(affiliation);
         setAccountType(type);
+    }
+
+    public String toString() {
+        return name + age + address + affiliation + type;
     }
 }
