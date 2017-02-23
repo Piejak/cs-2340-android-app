@@ -62,17 +62,21 @@ public class ProfileActivity extends AppCompatActivity {
 
         // setting profile texts
         mEmailView.setText(mUser.getEmail(), TextView.BufferType.EDITABLE);
+        mAccountTypeSpinner.setPrompt("Account Type");
+        //TODO spinner dropdown
         ValueEventListener userInformationListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get UserInformation object and use the values to update the UI
                 userInformation = dataSnapshot.getValue(UserInformation.class);
-                //FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String edu.cs2340.gatech.waterreport.model.UserInformation.getRealName()' on a null object reference
-                mNameView.setText(userInformation.getRealName(), TextView.BufferType.EDITABLE);
-                mAgeView.setText(userInformation.getAge(), TextView.BufferType.EDITABLE);
-                mAddressView.setText(userInformation.getAddress(), TextView.BufferType.EDITABLE);
-                mAffiliationView.setText(userInformation.getAffiliation(), TextView.BufferType.EDITABLE);
-                mAccountTypeSpinner.setPrompt(userInformation.getAccountType().getName());
+                System.out.println(userInformation);
+                if (userInformation != null) {
+                    mNameView.setText(userInformation.getRealName(), TextView.BufferType.EDITABLE);
+                    mAgeView.setText(userInformation.getAge(), TextView.BufferType.EDITABLE);
+                    mAddressView.setText(userInformation.getAddress(), TextView.BufferType.EDITABLE);
+                    mAffiliationView.setText(userInformation.getAffiliation(), TextView.BufferType.EDITABLE);
+                    mAccountTypeSpinner.setPrompt(userInformation.getAccountType().getName());
+                }
             }
 
             @Override
@@ -83,8 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
         mDatabase.addListenerForSingleValueEvent(userInformationListener);
-        // TODO fill all EditText hints with current user info which needs to be grabbed from firebase
-        // TODO profile_account_type needs to be set to default with profile_account_type.setPrompt(String accountType) pulled from firebase
+
     }
 
     public void changeProfileButtonPressed(View v) {
@@ -96,15 +99,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void cancelProfileButtonPressed(View v) {
-        // maybe something to add for extra functionality
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        FirebaseAuth.getInstance().signOut();
-        super.onBackPressed();
+        //FirebaseAuth.getInstance().signOut();
+        //super.onBackPressed();
+        // so back doesn't exit app
+        Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
+        startActivity(intent);
     }
 
 }

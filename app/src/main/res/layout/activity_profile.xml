@@ -26,7 +26,7 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/profile_password"
-            android:hint="Password" />
+            android:hint="New Password" />
 
         <Spinner
             android:layout_width="match_parent"
