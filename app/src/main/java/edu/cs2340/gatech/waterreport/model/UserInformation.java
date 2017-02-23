@@ -1,12 +1,14 @@
 package edu.cs2340.gatech.waterreport.model;
 
+import java.util.Map;
+
 /**
  * Created by yudong on 17/2/21.
  */
 
 public class UserInformation {
     private String name; // represents actual name of user
-    private int age;
+    private Integer age;
     private String address;
     private String affiliation;
     private AccountType type;
@@ -21,10 +23,10 @@ public class UserInformation {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -43,9 +45,24 @@ public class UserInformation {
     }
 
     public AccountType getAccountType() {
+        if (this.type == null) {
+            return this.type = AccountType.DEFAULT;
+        }
         return type;
     }
-    public void setAccountType(AccountType type) {
-        this.type = type;
+    public void setAccountType(String type) {
+        if (this.type == null) {
+            this.type = AccountType.DEFAULT;
+        }
+        this.type.setName(type);
+    }
+
+    public void updateAllFields(String name, Integer age, String address, String affiliation,
+                                String type) {
+        setRealName(name);
+        setAge(age);
+        setAddress(address);
+        setAffiliation(affiliation);
+        setAccountType(type);
     }
 }

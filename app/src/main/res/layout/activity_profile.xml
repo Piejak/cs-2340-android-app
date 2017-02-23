@@ -80,7 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.26"
             android:id="@+id/changeProfileButton"
-            android:layout_width="125dp" />
+            android:layout_width="125dp"
+            android:onClick="changeProfileButtonPressed" />
 
         <Button
             android:text="Cancel"

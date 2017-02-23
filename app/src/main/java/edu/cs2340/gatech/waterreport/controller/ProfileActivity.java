@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import edu.cs2340.gatech.waterreport.model.AccountType;
 import edu.cs2340.gatech.waterreport.model.UserInformation;
 
 /**
@@ -62,8 +64,22 @@ public class ProfileActivity extends AppCompatActivity {
 
         // setting profile texts
         mEmailView.setText(mUser.getEmail(), TextView.BufferType.EDITABLE);
-        mAccountTypeSpinner.setPrompt("Account Type");
-        //TODO spinner dropdown
+
+        //setting up spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                AccountType.values()) {
+                // this is so it hides the DEFAULT enum
+                @Override
+                public int getCount() {
+                    return(AccountType.values().length - 1); // Truncate the list
+                }
+        };
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mAccountTypeSpinner.setAdapter(spinnerAdapter);
+        mAccountTypeSpinner.setSelection(AccountType.DEFAULT.ordinal());
+
+        //getting UserInformation class from database
         ValueEventListener userInformationListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -71,11 +87,13 @@ public class ProfileActivity extends AppCompatActivity {
                 userInformation = dataSnapshot.getValue(UserInformation.class);
                 System.out.println(userInformation);
                 if (userInformation != null) {
+                    // FIXME i think android doesn't care what's inputted
+                    // what's below is permanent to the text views
                     mNameView.setText(userInformation.getRealName(), TextView.BufferType.EDITABLE);
-                    mAgeView.setText(userInformation.getAge(), TextView.BufferType.EDITABLE);
+                    mAgeView.setText((userInformation.getAge() == null) ? userInformation.getAge().toString(): null, TextView.BufferType.EDITABLE);
                     mAddressView.setText(userInformation.getAddress(), TextView.BufferType.EDITABLE);
                     mAffiliationView.setText(userInformation.getAffiliation(), TextView.BufferType.EDITABLE);
-                    mAccountTypeSpinner.setPrompt(userInformation.getAccountType().getName());
+                    mAccountTypeSpinner.setSelection(userInformation.getAccountType().ordinal());
                 }
             }
 
@@ -93,8 +111,19 @@ public class ProfileActivity extends AppCompatActivity {
     public void changeProfileButtonPressed(View v) {
         Intent intent = new Intent(this, LandingActivity.class);
 
-        //TODO add to Firebase
-
+        if (userInformation == null) {
+            userInformation = new UserInformation();
+        }
+        userInformation.updateAllFields(
+                mNameView.getText().toString(),
+                Integer.parseInt(mAgeView.getText().toString()),
+                mAddressView.getText().toString(),
+                mAffiliationView.getText().toString(),
+                mAccountTypeSpinner.getSelectedItem().toString()
+        );
+        mDatabase.child("users").child(mUser.getUid()).setValue(userInformation);
+        mUser.updateEmail(mEmailView.getText().toString());
+        mUser.updatePassword(mPasswordView.getText().toString());
         startActivity(intent);
     }
 
