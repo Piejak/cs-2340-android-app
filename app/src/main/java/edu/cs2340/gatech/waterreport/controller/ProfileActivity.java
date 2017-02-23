@@ -39,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText mAgeView;
     private EditText mAffiliationView;
     private Spinner mAccountTypeSpinner;
+    private ArrayAdapter<AccountType> spinnerAdapter;
 
     // user profile stored in firebase
     private UserInformation userInformation;
@@ -66,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         mEmailView.setText(mUser.getEmail(), TextView.BufferType.EDITABLE);
 
         //setting up spinner
-        ArrayAdapter<AccountType> spinnerAdapter = new ArrayAdapter<AccountType>(this,
+        spinnerAdapter = new ArrayAdapter<AccountType>(this,
                 android.R.layout.simple_spinner_item,
                 AccountType.values()) {
                 // this is so it hides the DEFAULT enum
@@ -84,9 +85,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get UserInformation object and use the values to update the UI
-                userInformation = dataSnapshot.getValue(UserInformation.class);
-                // FIXME the fields in userInformation is all null.
-                System.out.println(userInformation.toString());
+                userInformation = dataSnapshot.child("users").child(mUser.getUid()).getValue(UserInformation.class);
+                //System.out.println(userInformation.toString());
                 if (userInformation != null) {
                     mNameView.setText(userInformation.getRealName(), TextView.BufferType.EDITABLE);
                     mAgeView.setText((userInformation.getAge() != null) ? userInformation.getAge().toString(): null, TextView.BufferType.EDITABLE);
@@ -103,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
                         "loadUserInformation:onCancelled", databaseError.toException());
             }
         };
-        mDatabase.addListenerForSingleValueEvent(userInformationListener);
+        mDatabase.addValueEventListener(userInformationListener);
 
     }
 
@@ -121,8 +121,10 @@ public class ProfileActivity extends AppCompatActivity {
                 //Integer.parseInt(mAgeView.getText().toString()),
                 mAddressView.getText().toString(),
                 mAffiliationView.getText().toString(),
-                mAccountTypeSpinner.getSelectedItem().toString()
+                // should be a better way to do this
+                (AccountType) mAccountTypeSpinner.getSelectedItem()
         );
+        //System.out.println(mAccountTypeSpinner.getSelectedItem().toString().toUpperCase());
         //System.out.println(userInformation.toString());
         mDatabase.child("users").child(mUser.getUid()).setValue(userInformation);
         mUser.updateEmail(mEmailView.getText().toString());

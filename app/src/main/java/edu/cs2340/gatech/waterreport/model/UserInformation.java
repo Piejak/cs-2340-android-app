@@ -50,20 +50,18 @@ public class UserInformation {
         }
         return this.type;
     }
-    public void setAccountType(String type) {
-        if (this.type == null || type == "") {
-            this.type = AccountType.DEFAULT;
-        }
-        this.type.setName(type);
+    public void setAccountType(AccountType accountType) {
+            this.type = accountType;
     }
 
     public void updateAllFields(String name, String address, String affiliation,
-                                String type) {
+                                AccountType accountType) {
         setRealName(name);
         //setAge(age);
         setAddress(address);
         setAffiliation(affiliation);
-        setAccountType(type);
+        setAccountType(accountType);
+        //System.out.println(accountType);
     }
 
     public String toString() {

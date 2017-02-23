@@ -4,14 +4,14 @@ package edu.cs2340.gatech.waterreport.model;
  * Created by Hui Li on 2/21/2017.
  */
 
-public enum AccountType {
+public enum AccountType implements java.io.Serializable {
     USER("User"),
     WORKER("Worker"),
     MANAGER("Manager"),
-    ADMIN("Admin"),
+    ADMINISTRATOR("Administrator"),
     DEFAULT("Select an Account Type");
 
-    private String name;
+    private final String name;
 
     AccountType(String name) {
         this.name = name;
@@ -25,10 +25,5 @@ public enum AccountType {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String toString() { return name;
-    }
+    public String toString() { return name; }
 }

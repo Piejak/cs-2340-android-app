@@ -30,8 +30,8 @@
 
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_account_type" />
+            android:id="@+id/profile_account_type"
+            android:layout_height="35dp" />
 
         <EditText
             android:layout_width="match_parent"
