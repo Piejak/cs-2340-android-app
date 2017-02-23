@@ -5,43 +5,47 @@ package edu.cs2340.gatech.waterreport.model;
  */
 
 public class UserInformation {
-    private String email;
-    private String password;
+    private String name; // represents actual name of user
+    private int age;
+    private String address;
+    private String affiliation;
     private AccountType type;
-    private String status;
 
     public UserInformation() {
-        email = "";
-        password = "";
-        type = null;
-        status = "unregistered";
     }
 
-    public String getEmail() {
-        return email;
+    public String getRealName() {
+        return name;
     }
-    public void setUsername(String name) {
-        email = name;
+    public void setRealName(String name) {
+        this.name = name;
     }
-    public String getPassword() {
-        return password;
+
+    public int getAge() {
+        return age;
     }
-    public void setPassword(String input) {
-        password = input;
+    public void setAge(int age) {
+        this.age = age;
     }
-    public String getStatus() {
-        return status;
+
+    public String getAddress() {
+        return address;
     }
-    public void setStatus(String input) {
-        status = input;
+    public void setAddress(String address) {
+        this.address = address;
     }
-    public AccountType getType() {
+
+    public String getAffiliation() {
+        return affiliation;
+    }
+    public void setAffiliation(String affiliation) {
+        this.affiliation = affiliation;
+    }
+
+    public AccountType getAccountType() {
         return type;
     }
-    public void setType(AccountType input) {
-        type = input;
+    public void setAccountType(AccountType type) {
+        this.type = type;
     }
-
-
-
 }

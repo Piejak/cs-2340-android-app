@@ -30,7 +30,6 @@ public class LandingActivity extends AppCompatActivity {
 
     public void profileButtonPressed(View v) {
         Intent intent = new Intent(this, ProfileActivity.class);
-        //this may be used for Firebase user profile
         startActivity(intent);
     }
 
