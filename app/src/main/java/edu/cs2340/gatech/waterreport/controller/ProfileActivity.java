@@ -57,7 +57,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Intent intent = getIntent();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -133,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (userInformation == null) {
             userInformation = new UserInformation();
         }
-        // setting age in uesrInformation object
+        // setting age in userInformation object
         if (mAgeView.getText().length() != 0) {
            userInformation.setAge(Integer.parseInt(mAgeView.getText().toString()));
         }

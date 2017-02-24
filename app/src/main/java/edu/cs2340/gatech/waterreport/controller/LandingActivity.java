@@ -8,7 +8,6 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import edu.cs2340.gatech.waterreport.model.AccountType;
 /**
  * A landing screen that user can logout or view the profile
  *
@@ -28,7 +27,6 @@ public class LandingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
-        Intent intent = getIntent();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
