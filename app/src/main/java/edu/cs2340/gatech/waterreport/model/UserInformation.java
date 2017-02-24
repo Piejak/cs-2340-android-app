@@ -3,7 +3,11 @@ package edu.cs2340.gatech.waterreport.model;
 import java.util.Map;
 
 /**
- * Created by yudong on 17/2/21.
+ * the UserInformation class used to store the User's information.
+ *
+ * @author  Johnny Lee, Brian Piejak, Yudong Shao, Hui Li, Jimmy Dinh-Nguyen
+ * @version 1.0
+ * @since   02/21/2017
  */
 
 public class UserInformation {
@@ -13,9 +17,13 @@ public class UserInformation {
     private String affiliation;
     private AccountType type;
 
+    /**
+     * default constructor
+     */
     public UserInformation() {
     }
 
+    //getter and setter mathod
     public String getRealName() {
         return name;
     }
