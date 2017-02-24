@@ -18,6 +18,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A login screen that offers login via email/password.
+ *
+ * @author  Johnny Lee, Brian Piejak, Yudong Shao, Hui Li, Jimmy Dinh-Nguyen
+ * @version 1.0
+ * @since   02/21/2017
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,6 +35,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+
+    /**
+     * called when the login activity is starting.
+     * @param savedInstanceState the Bundle that maps form String key to various values. save the state of login Activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +63,9 @@ public class LoginActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     *Start the Activity
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -62,6 +74,10 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+
+    /**
+     * Stop the Activity
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -72,18 +88,30 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * called when user click the login button
+     * @param v represents the Login button
+     */
     public void onLoginButtonClicked(View v) {
         setContentView(R.layout.activity_login);
         mLoginEmailView = (AutoCompleteTextView) findViewById(R.id.login_email);
         mLoginPasswordView = (EditText) findViewById(R.id.login_password);
     }
 
+    /**
+     * called when user click the register button
+     * @param v represents the Register button
+     */
     public void onRegisterButtonClicked(View v) {
         setContentView(R.layout.activity_register);
         mRegisterEmailView = (AutoCompleteTextView) findViewById(R.id.register_email);
         mRegisterPasswordView = (EditText) findViewById(R.id.register_password);
     }
 
+    /**
+     * runs after user click the create button
+     * @param v represents the Register button
+     */
     public void createAccount(View v) {
         mAuth.createUserWithEmailAndPassword(mRegisterEmailView.getText().toString(), mRegisterPasswordView.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -102,6 +130,10 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * runs after user click the SignIn button
+     * @param v represents the SignIn button
+     */
     public void signIn(View v) {
         mAuth.signInWithEmailAndPassword(mLoginEmailView.getText().toString(), mLoginPasswordView.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
