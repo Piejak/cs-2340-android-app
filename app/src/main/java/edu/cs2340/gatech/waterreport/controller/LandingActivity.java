@@ -1,8 +1,10 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +39,7 @@ public class LandingActivity extends AppCompatActivity {
     public void logoutButtonPressed(View v) {
         Intent intent = new Intent(this, LoginActivity.class);
         FirebaseAuth.getInstance().signOut();
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     /**
@@ -46,7 +48,7 @@ public class LandingActivity extends AppCompatActivity {
      */
     public void profileButtonPressed(View v) {
         Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     /**
@@ -57,4 +59,16 @@ public class LandingActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         super.onBackPressed();
     }
+
+    /**
+     * called on the press of the floating create report button
+     * @param v
+     */
+    public void createReportButtonPressed(View v) {
+        // probably will want to check the type of user and decide what to do based on that
+        Intent intent = new Intent(this, ReportActivity.class);
+        //animate the transition
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
 }

@@ -1,5 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -153,7 +154,7 @@ public class ProfileActivity extends AppCompatActivity {
             //System.out.println("password is " + mPasswordView.getText());
             mUser.updatePassword(mPasswordView.getText().toString());
         }
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     /**
@@ -162,7 +163,7 @@ public class ProfileActivity extends AppCompatActivity {
      */
     public void cancelProfileButtonPressed(View v) {
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     /**
@@ -174,7 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
         //super.onBackPressed();
         // so back doesn't exit app
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
 }

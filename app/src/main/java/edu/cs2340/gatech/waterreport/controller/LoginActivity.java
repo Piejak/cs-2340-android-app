@@ -1,11 +1,14 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -135,11 +138,14 @@ public class LoginActivity extends AppCompatActivity {
      * @param v represents the SignIn button
      */
     public void signIn(View v) {
+        showProgress();
         mAuth.signInWithEmailAndPassword(mLoginEmailView.getText().toString(), mLoginPasswordView.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("LoginActivity", "mAuth:signIn:onComplete::" + task.isSuccessful());
+
+                        hideProgress();
 
                         if (!task.isSuccessful()) {
                             //the creation failed
@@ -150,6 +156,55 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void showProgress() {
+        // previously invisible view
+        View myView = findViewById(R.id.login_progress);
+
+        // get the center for the clipping circle
+        int cx = myView.getWidth() / 2;
+        int cy = myView.getHeight() / 2;
+
+        // get the final radius for the clipping circle
+        float finalRadius = (float) Math.hypot(cx, cy);
+
+        // create the animator for this view (the start radius is zero)
+        Animator anim =
+                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+
+        // make the view visible and start the animation
+        myView.setVisibility(View.VISIBLE);
+        anim.start();
+    }
+
+    public void hideProgress() {
+        // previously visible view
+        final View myView = findViewById(R.id.login_progress);
+
+        // get the center for the clipping circle
+        int cx = myView.getWidth() / 2;
+        int cy = myView.getHeight() / 2;
+
+        // get the initial radius for the clipping circle
+        float initialRadius = (float) Math.hypot(cx, cy);
+
+        // create the animation (the final radius is zero)
+        Animator anim =
+                ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
+
+        // make the view invisible when the animation is done
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                myView.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        // start the animation
+        anim.start();
+
     }
 }
 

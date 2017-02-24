@@ -1,5 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,7 @@ public class ReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_report);
         Intent intent = getIntent();
         //mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -74,18 +75,6 @@ public class ReportActivity extends AppCompatActivity {
      */
     public void cancelReportButtonPressed(View v) {
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * Called when the activity has detected the user's press of the back key.
-     */
-    @Override
-    public void onBackPressed() {
-        //FirebaseAuth.getInstance().signOut();
-        //super.onBackPressed();
-        // so back doesn't exit app
-        Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 }
