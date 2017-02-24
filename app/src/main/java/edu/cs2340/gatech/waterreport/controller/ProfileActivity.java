@@ -32,7 +32,6 @@ import edu.cs2340.gatech.waterreport.model.UserInformation;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    //private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     // database
     private DatabaseReference mDatabase;
@@ -59,7 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Intent intent = getIntent();
-        //mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -98,7 +96,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get UserInformation object and use the values to update the UI
                 userInformation = dataSnapshot.child("users").child(mUser.getUid()).getValue(UserInformation.class);
-                //System.out.println(userInformation.toString());
+
+                // pulling values for user from server object
                 if (userInformation != null) {
                     mNameView.setText(userInformation.getRealName(), TextView.BufferType.EDITABLE);
                     mAgeView.setText((userInformation.getAge() != null) ? userInformation.getAge().toString(): null, TextView.BufferType.EDITABLE);
@@ -134,20 +133,22 @@ public class ProfileActivity extends AppCompatActivity {
         if (userInformation == null) {
             userInformation = new UserInformation();
         }
+        // setting age in uesrInformation object
         if (mAgeView.getText().length() != 0) {
            userInformation.setAge(Integer.parseInt(mAgeView.getText().toString()));
         }
+
+        // update the rest of the fields in userInformation
         userInformation.updateAllFields(
                 mNameView.getText().toString(),
-                //Integer.parseInt(mAgeView.getText().toString()),
                 mAddressView.getText().toString(),
                 mAffiliationView.getText().toString(),
-                // should be a better way to do this
                 (AccountType) mAccountTypeSpinner.getSelectedItem()
         );
-        //System.out.println(mAccountTypeSpinner.getSelectedItem().toString().toUpperCase());
-        //System.out.println(userInformation.toString());
+
+        // sending userInformation to server
         mDatabase.child("users").child(mUser.getUid()).setValue(userInformation);
+        // updating email and password
         mUser.updateEmail(mEmailView.getText().toString());
         if (mPasswordView.getText().length() != 0) {
             //System.out.println("password is " + mPasswordView.getText());
