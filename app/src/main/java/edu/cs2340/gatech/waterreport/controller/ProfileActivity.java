@@ -22,7 +22,12 @@ import edu.cs2340.gatech.waterreport.model.AccountType;
 import edu.cs2340.gatech.waterreport.model.UserInformation;
 
 /**
- * Profile activity to create/modify a user profile
+ * The ProfileActivity class creates a user interface that can use to
+ * display the user profile and edit the profile information for a specific user
+ *
+ * @author  Johnny Lee, Brian Piejak, Yudong Shao, Hui Li, Jimmy Dinh-Nguyen
+ * @version 1.0
+ * @since   02/21/2017
  */
 
 public class ProfileActivity extends AppCompatActivity {
@@ -44,7 +49,10 @@ public class ProfileActivity extends AppCompatActivity {
     // user profile stored in firebase
     private UserInformation userInformation;
 
-
+    /**
+     * called when the activity is starting.
+     * @param savedInstanceState  the Bundle that maps form String key to various values.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +88,11 @@ public class ProfileActivity extends AppCompatActivity {
         mAccountTypeSpinner.setAdapter(spinnerAdapter);
         mAccountTypeSpinner.setSelection(AccountType.DEFAULT.ordinal());
 
-        //getting UserInformation class from database
         ValueEventListener userInformationListener = new ValueEventListener() {
+            /**
+             *getting UserInformation class from database
+             * @param dataSnapshot the file Filebase Database location.
+             */
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get UserInformation object and use the values to update the UI
@@ -96,6 +107,11 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
 
+
+            /**
+             * runs after there exist a DatabaseError
+             * @param databaseError Used to an error it received from interacting with the storage layer.
+             */
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting user info failed, log a message
@@ -107,6 +123,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * called when user click the Change Profile Button
+     * @param v represents the button for changing Profile
+     */
     public void changeProfileButtonPressed(View v) {
         Intent intent = new Intent(this, LandingActivity.class);
 
@@ -135,11 +155,18 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * called when user click the cancel Change Profile Button.
+     * @param v represents the button for cancel changing the profile
+     */
     public void cancelProfileButtonPressed(View v) {
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     */
     @Override
     public void onBackPressed() {
         //FirebaseAuth.getInstance().signOut();
