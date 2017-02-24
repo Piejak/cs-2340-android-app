@@ -34,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     //private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    // database
     private DatabaseReference mDatabase;
 
     // for the profile view
