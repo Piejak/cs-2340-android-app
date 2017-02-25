@@ -1,14 +1,21 @@
 package edu.cs2340.gatech.waterreport.controller;
 
 import android.app.ActivityOptions;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Explode;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import edu.cs2340.gatech.waterreport.model.NavDrawerItem;
 
 /**
  * A landing screen that user can logout or view the profile
@@ -19,6 +26,14 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class LandingActivity extends AppCompatActivity {
 
+    private NavDrawerItem[] mDrawerOptions = {
+            new NavDrawerItem("Profile", R.drawable.ic_profile, R.layout.activity_profile),
+            new NavDrawerItem("Reports", R.drawable.ic_home, R.layout.activity_landing),
+            new NavDrawerItem("Log out", R.drawable.ic_leave, R.layout.activity_welcome)
+    };
+    private DrawerLayout mNavDrawerLayout;
+    private ListView mDrawerList;
+
     private FirebaseUser mUser;
 
     /**
@@ -28,8 +43,14 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing);
+        setContentView(R.layout.drawer_layout_main);
+
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        mNavDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mDrawerOptions));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     /**
@@ -71,4 +92,30 @@ public class LandingActivity extends AppCompatActivity {
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+        // Create a new fragment and specify the planet to show based on position
+        Fragment fragment = new StructureFragment();
+        Bundle args = new Bundle();
+        args.putInt(StructureFragment.ARG_PAGE, mDrawerOptions[position].getLayout());
+        fragment.setArguments(args);
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mNavDrawerLayout.closeDrawer(mDrawerList);
+    }
 }
