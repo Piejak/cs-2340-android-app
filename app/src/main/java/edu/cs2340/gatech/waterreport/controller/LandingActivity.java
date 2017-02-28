@@ -2,6 +2,7 @@ package edu.cs2340.gatech.waterreport.controller;
 
 import android.app.ActivityOptions;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
@@ -61,9 +62,11 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
 
         mNavDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
 
         mDrawerToggle.syncState();
 
@@ -118,7 +121,7 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
 
     /**
      * called on the press of the floating create report button
-     * @param v
+     * @param v the view that contains the button being pressed
      */
     public void createReportButtonPressed(View v) {
         // probably will want to check the type of user and decide what to do based on that
@@ -166,7 +169,7 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
 
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
 
