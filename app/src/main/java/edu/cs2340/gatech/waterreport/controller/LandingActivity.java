@@ -15,13 +15,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-
-import edu.cs2340.gatech.waterreport.model.NavDrawerItem;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A landing screen that user can logout or view the profile
@@ -31,15 +28,7 @@ import edu.cs2340.gatech.waterreport.model.NavDrawerItem;
  * @since   02/21/2017
  */
 public class LandingActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ReportListFragment.OnFragmentInteractionListener {
-
-    private NavDrawerItem[] mDrawerOptions = {
-            new NavDrawerItem("Profile", R.drawable.ic_profile, R.layout.activity_profile),
-            new NavDrawerItem("Reports", R.drawable.ic_home, R.layout.activity_landing),
-            new NavDrawerItem("Log out", R.drawable.ic_leave, R.layout.activity_welcome)
-    };
-    private DrawerLayout mNavDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
 
 
     @Override
@@ -51,16 +40,16 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
         setSupportActionBar(toolbar);
 
 
-        mNavDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
-                mNavDrawerLayout,         /* DrawerLayout object */
+                navDrawerLayout,         /* DrawerLayout object */
                 toolbar,
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
         );
 
-        mNavDrawerLayout.addDrawerListener(mDrawerToggle);
+        navDrawerLayout.addDrawerListener(mDrawerToggle);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,6 +75,13 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView headerText = (TextView) headerView.findViewById(R.id.header_text);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            headerText.setText(user.getEmail());
+        }
     }
 
     @Override
@@ -101,25 +97,6 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
     }
 
     /**
-     * called when user click the logout button to logout
-     * @param v represents the logout button
-     */
-    public void logoutButtonPressed(View v) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        FirebaseAuth.getInstance().signOut();
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    /**
-     * called when user click the logout button to changing the landing Activity to ProfileActivity
-     * @param v represents the profile button
-     */
-    public void profileButtonPressed(View v) {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    /**
      * called on the press of the floating create report button
      * @param v the view that contains the button being pressed
      */
@@ -128,33 +105,6 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
         Intent intent = new Intent(this, ReportActivity.class);
         //animate the transition
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
-    /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = new StructureFragment();
-        Bundle args = new Bundle();
-        args.putInt(StructureFragment.ARG_PAGE, mDrawerOptions[position].getLayout());
-        fragment.setArguments(args);
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mNavDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override

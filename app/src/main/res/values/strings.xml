@@ -20,9 +20,6 @@
     <string name="type">Type</string>
     <string name="condition">Condition</string>
     <string name="have_account_prompt">Already signed up?</string>
-    <string name="register_prompt">Don't have an account?</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register_prompt">Don\'t have an account?</string>
 
 </resources>
