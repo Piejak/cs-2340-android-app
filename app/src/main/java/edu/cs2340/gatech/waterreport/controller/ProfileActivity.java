@@ -162,8 +162,8 @@ public class ProfileActivity extends AppCompatActivity {
      * @param v represents the button for cancel changing the profile
      */
     public void cancelProfileButtonPressed(View v) {
-        Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -174,8 +174,8 @@ public class ProfileActivity extends AppCompatActivity {
         //FirebaseAuth.getInstance().signOut();
         //super.onBackPressed();
         // so back doesn't exit app
-        Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -1,19 +1,24 @@
 package edu.cs2340.gatech.waterreport.controller;
 
 import android.app.ActivityOptions;
+import android.net.Uri;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import edu.cs2340.gatech.waterreport.model.NavDrawerItem;
 
@@ -24,7 +29,7 @@ import edu.cs2340.gatech.waterreport.model.NavDrawerItem;
  * @version 1.0
  * @since   02/21/2017
  */
-public class LandingActivity extends AppCompatActivity {
+public class LandingActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ReportListFragment.OnFragmentInteractionListener {
 
     private NavDrawerItem[] mDrawerOptions = {
             new NavDrawerItem("Profile", R.drawable.ic_profile, R.layout.activity_profile),
@@ -32,25 +37,64 @@ public class LandingActivity extends AppCompatActivity {
             new NavDrawerItem("Log out", R.drawable.ic_leave, R.layout.activity_welcome)
     };
     private DrawerLayout mNavDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
 
-    private FirebaseUser mUser;
 
-    /**
-     * called when the landing activity is starting.
-     * @param savedInstanceState the Bundle that maps form String key to various values. save the state of login Activity
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout_main);
 
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         mNavDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
-        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mDrawerOptions));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mNavDrawerLayout,         /* DrawerLayout object */
+                toolbar,
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        );
+
+        mNavDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        mDrawerToggle.syncState();
+
+        if (savedInstanceState == null) {
+            Fragment fragment = null;
+            Class fragmentClass = ReportListFragment.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        }
+
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -70,15 +114,6 @@ public class LandingActivity extends AppCompatActivity {
     public void profileButtonPressed(View v) {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    /**
-     * Called when the activity has detected the user's press of the back key.
-     */
-    @Override
-    public void onBackPressed() {
-        FirebaseAuth.getInstance().signOut();
-        super.onBackPressed();
     }
 
     /**
@@ -117,5 +152,26 @@ public class LandingActivity extends AppCompatActivity {
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         mNavDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

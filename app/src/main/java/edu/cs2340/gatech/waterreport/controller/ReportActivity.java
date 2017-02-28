@@ -28,10 +28,6 @@ public class ReportActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
 
-    /**
-     * called when the activity is starting.
-     * @param savedInstanceState  the Bundle that maps form String key to various values.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +66,19 @@ public class ReportActivity extends AppCompatActivity {
 
 
     /**
-     * called when user click the cancel Change Profile Button.
+     * called when user click the cancel report Button.
      * @param v represents the button for cancel changing the profile
      */
     public void cancelReportButtonPressed(View v) {
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    /**
+     * called when user click the submit report Button.
+     * @param v represents the button for cancel changing the profile
+     */
+    public void submitReportButtonPressed(View v) {
+
     }
 }
