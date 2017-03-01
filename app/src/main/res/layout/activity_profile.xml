@@ -89,7 +89,6 @@
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:id="@+id/cancelProfileButton"
-            android:layout_weight="0.26"
-            android:onClick="cancelProfileButtonPressed" />
+            android:layout_weight="0.26" />
     </LinearLayout>
 </RelativeLayout>

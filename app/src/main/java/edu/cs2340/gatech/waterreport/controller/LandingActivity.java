@@ -13,6 +13,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -27,7 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
  * @version 1.0
  * @since   02/21/2017
  */
-public class LandingActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ReportListFragment.OnFragmentInteractionListener {
+public class LandingActivity extends AppCompatActivity implements ReportListFragment.OnFragmentInteractionListener {
     private ActionBarDrawerToggle mDrawerToggle;
 
 
@@ -73,7 +75,14 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
         }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                selectDrawerItem(menuItem);
+                return true;
+            }
+        });
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         View headerView = navigationView.getHeaderView(0);
         TextView headerText = (TextView) headerView.findViewById(R.id.header_text);
@@ -141,12 +150,13 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean selectDrawerItem(MenuItem item) {
 
         int id = item.getItemId();
         Fragment fragment = null;
         Class fragmentClass = null;
+        Log.d("Debug", "something being pressed");
+
         if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             FirebaseAuth.getInstance().signOut();
@@ -155,6 +165,8 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
             return true;
         } else if (id == R.id.nav_profile) {
             // do stuff for profile
+            fragmentClass = ProfileFragment.class;
+            Log.d("Debug", "Profile being pressed");
         } else if (id == R.id.nav_reports) {
             // show main page
         }
@@ -177,5 +189,12 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        return true;
     }
 }
