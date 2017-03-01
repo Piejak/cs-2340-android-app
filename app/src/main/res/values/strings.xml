@@ -32,7 +32,4 @@
     <string name="prompt_reset_email">Please enter your email address below</string>
     <string name="reset_password">Reset Password</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

@@ -1,14 +1,13 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.NavigationView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,6 +48,9 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     private Spinner mAccountTypeSpinner;
     private ArrayAdapter<AccountType> spinnerAdapter;
 
+    private Button mCancelButton;
+    private Button mProfileButton;
+
     // user profile stored in firebase
     private UserInformation userInformation;
 
@@ -75,6 +77,12 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         mAgeView = (EditText) getActivity().findViewById(R.id.profile_age);
         mAffiliationView = (EditText) getActivity().findViewById(R.id.profile_affiliation);
         mAccountTypeSpinner = (Spinner) getActivity().findViewById(R.id.profile_account_type);
+
+        mCancelButton = (Button) getActivity().findViewById(R.id.cancelProfileButton);
+        mCancelButton.setOnClickListener(this);
+
+        mProfileButton = (Button) getActivity().findViewById(R.id.changeProfileButton);
+        mProfileButton.setOnClickListener(this);
 
         // setting profile texts
         mEmailView.setText(mUser.getEmail(), TextView.BufferType.EDITABLE);
@@ -128,44 +136,49 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         mDatabase.addValueEventListener(userInformationListener);
     }
 
-    /**
-     * called when user click the Change Profile Button
-     * @param v represents the button for changing Profile
-     */
-    public void changeProfileButtonPressed(View v) {
-        Intent intent = new Intent(getContext(), LandingActivity.class);
-
-        if (userInformation == null) {
-            userInformation = new UserInformation();
-        }
-        // setting age in userInformation object
-        if (mAgeView.getText().length() != 0) {
-            userInformation.setAge(Integer.parseInt(mAgeView.getText().toString()));
-        }
-
-        // update the rest of the fields in userInformation
-        userInformation.updateAllFields(
-                mNameView.getText().toString(),
-                mAddressView.getText().toString(),
-                mAffiliationView.getText().toString(),
-                (AccountType) mAccountTypeSpinner.getSelectedItem()
-        );
-
-        // sending userInformation to server
-        mDatabase.child("users").child(mUser.getUid()).setValue(userInformation);
-        // updating email and password
-        mUser.updateEmail(mEmailView.getText().toString());
-        if (mPasswordView.getText().length() != 0) {
-            //System.out.println("password is " + mPasswordView.getText());
-            mUser.updatePassword(mPasswordView.getText().toString());
-        }
-        startActivity(intent);
-    }
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.cancelProfileButton) {
-            getActivity().onBackPressed();
+            NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+            navigationView.getMenu().getItem(0).setChecked(true);
+            try {
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, ReportListFragment.class.newInstance()).commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (v.getId() == R.id.changeProfileButton) {
+            if (userInformation == null) {
+                userInformation = new UserInformation();
+            }
+            // setting age in userInformation object
+            if (mAgeView.getText().length() != 0) {
+                userInformation.setAge(Integer.parseInt(mAgeView.getText().toString()));
+            }
+
+            // update the rest of the fields in userInformation
+            userInformation.updateAllFields(
+                    mNameView.getText().toString(),
+                    mAddressView.getText().toString(),
+                    mAffiliationView.getText().toString(),
+                    (AccountType) mAccountTypeSpinner.getSelectedItem()
+            );
+
+            // sending userInformation to server
+            mDatabase.child("users").child(mUser.getUid()).setValue(userInformation);
+            // updating email and password
+            mUser.updateEmail(mEmailView.getText().toString());
+            if (mPasswordView.getText().length() != 0) {
+                //System.out.println("password is " + mPasswordView.getText());
+                mUser.updatePassword(mPasswordView.getText().toString());
+            }
+
+            NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+            navigationView.getMenu().getItem(0).setChecked(true);
+            try {
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, ReportListFragment.class.newInstance()).commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

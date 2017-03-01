@@ -155,7 +155,6 @@ public class LandingActivity extends AppCompatActivity implements ReportListFrag
         int id = item.getItemId();
         Fragment fragment = null;
         Class fragmentClass = null;
-        Log.d("Debug", "something being pressed");
 
         if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -166,9 +165,9 @@ public class LandingActivity extends AppCompatActivity implements ReportListFrag
         } else if (id == R.id.nav_profile) {
             // do stuff for profile
             fragmentClass = ProfileFragment.class;
-            Log.d("Debug", "Profile being pressed");
         } else if (id == R.id.nav_reports) {
             // show main page
+            fragmentClass = ReportListFragment.class;
         }
         if (fragmentClass != null) {
             try {
@@ -178,11 +177,11 @@ public class LandingActivity extends AppCompatActivity implements ReportListFrag
             }
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawerLayout.closeDrawer(GravityCompat.START);
-
         }
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
