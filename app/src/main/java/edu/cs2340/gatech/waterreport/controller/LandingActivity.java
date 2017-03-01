@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
  * @version 1.0
  * @since   02/21/2017
  */
-public class LandingActivity extends GenericActivity implements ReportListFragment.OnFragmentInteractionListener {
+public class LandingActivity extends GenericActivity {
     private ActionBarDrawerToggle mDrawerToggle;
 
 
@@ -177,11 +177,6 @@ public class LandingActivity extends GenericActivity implements ReportListFragme
         drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override
