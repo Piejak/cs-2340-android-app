@@ -37,9 +37,8 @@ public class LandingActivity extends AppCompatActivity {
      * @param v represents the logout button
      */
     public void logoutButtonPressed(View v) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        FirebaseAuth.getInstance().signOut();
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        //Back button and logout button do the same thing anyways -Johnny
+        onBackPressed();
     }
 
     /**
@@ -56,8 +55,10 @@ public class LandingActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
         FirebaseAuth.getInstance().signOut();
-        super.onBackPressed();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     /**
