@@ -140,15 +140,38 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+        int id = item.getItemId();
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        if (id == R.id.nav_logout) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            return true;
+        } else if (id == R.id.nav_profile) {
+            // do stuff for profile
+        } else if (id == R.id.nav_reports) {
+            // show main page
+        }
+        if (fragmentClass != null) {
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawerLayout.closeDrawer(GravityCompat.START);
+
+        }
+        return true;
     }
 
     @Override
