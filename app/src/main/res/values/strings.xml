@@ -16,7 +16,7 @@
     </string>
     <string name="forgot_password">Forgot password?</string>
     <string name="prompt_login">Already signed up?</string>
-    <string name="prompt_register">Don't have an account?</string>
+    <string name="prompt_register">Don\'t have an account?</string>
     <string name="prompt_reset_email">Please enter your email address below</string>
     <string name="reset_password">Reset Password</string>
 
