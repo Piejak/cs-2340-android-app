@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
  * @version 1.0
  * @since   02/21/2017
  */
-public class LandingActivity extends AppCompatActivity {
+public class LandingActivity extends GenericActivity {
 
     private FirebaseUser mUser;
 
@@ -46,8 +46,7 @@ public class LandingActivity extends AppCompatActivity {
      * @param v represents the profile button
      */
     public void profileButtonPressed(View v) {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        switchActivity(ProfileActivity.class);
     }
 
     /**
@@ -63,13 +62,10 @@ public class LandingActivity extends AppCompatActivity {
 
     /**
      * called on the press of the floating create report button
-     * @param v
+     * @param v the create report button
      */
     public void createReportButtonPressed(View v) {
-        // probably will want to check the type of user and decide what to do based on that
-        Intent intent = new Intent(this, ReportActivity.class);
-        //animate the transition
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        switchActivity(ReportActivity.class);
     }
 
 }

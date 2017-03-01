@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
  * Controller class for reports
  */
 
-public class ReportActivity extends AppCompatActivity {
+public class ReportActivity extends GenericActivity {
 
     //private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -74,8 +74,6 @@ public class ReportActivity extends AppCompatActivity {
      * @param v represents the button for cancel changing the profile
      */
     public void cancelReportButtonPressed(View v) {
-        //onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        switchActivity(LandingActivity.class);
     }
 }
