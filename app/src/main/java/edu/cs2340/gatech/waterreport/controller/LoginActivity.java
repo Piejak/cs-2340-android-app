@@ -2,6 +2,7 @@ package edu.cs2340.gatech.waterreport.controller;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private AutoCompleteTextView mRegisterEmailView;
     private EditText mLoginPasswordView;
     private EditText mRegisterPasswordView;
+    private EditText mResetEmailView;
 
     // Firebase instance variables
     private FirebaseAuth mAuth;
@@ -205,6 +207,34 @@ public class LoginActivity extends AppCompatActivity {
         // start the animation
         anim.start();
 
+    }
+
+    /**
+     * called when user click the Forgot Password button
+     * @param v represents the Forgot Password button
+     */
+    public void onForgotPasswordButtonPressed(View v) {
+        setContentView(R.layout.activity_password_reset);
+        mResetEmailView = (AutoCompleteTextView) findViewById(R.id.reset_email);
+    }
+
+    /**
+     * called when user click the Password Reset button
+     * @param v represents the Password Reset button
+     */
+    public void onResetPasswordButtonPressed(View v) {
+        mAuth.sendPasswordResetEmail(mResetEmailView.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("LoginActivity", "Email Sent.");
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        recreate();
     }
 }
 
