@@ -1,0 +1,19 @@
+language: android
+jdk: oraclejdk8
+android:
+  components:
+    - tools
+    - build-tools-25.0.2
+    - platform-tools
+
+    #SDK Version
+    - android-23
+
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-19
+
+    # emulator system image
+    - sys-img-armeabi-v7a-android-23
