@@ -28,9 +28,7 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            >
+            android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -89,6 +87,14 @@
                 android:id="@+id/register_from_login"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:onClick="onRegisterButtonClicked" />
+
+            <Button
+                android:text="@string/forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/forgotPasswordButton"
+                android:onClick="onForgotPasswordButtonPressed"
+                style="@style/Widget.AppCompat.Button.Borderless" />
 
         </LinearLayout>
     </ScrollView>

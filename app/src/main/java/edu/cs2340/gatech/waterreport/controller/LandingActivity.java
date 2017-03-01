@@ -67,11 +67,10 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        }
 
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -82,6 +81,24 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
         if (user != null) {
             headerText.setText(user.getEmail());
         }
+    }
+
+    /**
+     * called when user click the logout button to logout
+     * @param v represents the logout button
+     */
+    public void logoutButtonPressed(View v) {
+        //Back button and logout button do the same thing anyways -Johnny
+        onBackPressed();
+    }
+
+    /**
+     * called when user click the logout button to changing the landing Activity to ProfileActivity
+     * @param v represents the profile button
+     */
+    public void profileButtonPressed(View v) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override
@@ -97,6 +114,22 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
     }
 
     /**
+     * Called when the activity has detected the user's press of the back key.
+     */
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        }
+    }
+
+    /**
      * called on the press of the floating create report button
      * @param v the view that contains the button being pressed
      */
@@ -109,12 +142,7 @@ public class LandingActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
     }
 
 
