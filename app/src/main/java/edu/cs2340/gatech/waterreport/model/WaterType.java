@@ -17,7 +17,9 @@ public enum WaterType {
     WaterType(String input) {
         type = input;
     }
-    public String getType() {
+
+    @Override
+    public String toString() {
         return type;
     }
 }

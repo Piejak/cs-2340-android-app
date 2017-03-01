@@ -16,7 +16,8 @@ public enum WaterCondition {
         condition = input;
     }
 
-    public String getCondition() {
+    @Override
+    public String toString() {
         return condition;
     }
 }

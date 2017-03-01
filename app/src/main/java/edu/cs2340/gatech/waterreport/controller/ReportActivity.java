@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,6 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import edu.cs2340.gatech.waterreport.model.WaterCondition;
+import edu.cs2340.gatech.waterreport.model.WaterType;
 
 
 /**
@@ -27,15 +33,26 @@ public class ReportActivity extends GenericActivity {
     // database
     private DatabaseReference mDatabase;
 
+    private Spinner waterTypeSpinner;
+    private Spinner waterConditionSpinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        Intent intent = getIntent();
-        //mAuth = FirebaseAuth.getInstance();
+
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        waterTypeSpinner = (Spinner) findViewById(R.id.type_spinner);
+        waterConditionSpinner = (Spinner) findViewById(R.id.condition_spinner);
+
+        waterTypeSpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, WaterType.values()));
+
+        waterConditionSpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, WaterCondition.values()));
 
         ValueEventListener userInformationListener = new ValueEventListener() {
             /**

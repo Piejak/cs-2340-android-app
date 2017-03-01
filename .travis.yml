@@ -17,3 +17,6 @@ android:
 
     # emulator system image
     - sys-img-armeabi-v7a-android-23
+
+  licenses:
+    - 'android-sdk-license-.+'
