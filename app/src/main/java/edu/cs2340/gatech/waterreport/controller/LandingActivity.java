@@ -29,8 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
  * @version 1.0
  * @since   02/21/2017
  */
-public class LandingActivity extends AppCompatActivity implements ReportListFragment.OnFragmentInteractionListener {
-    private ActionBarDrawerToggle mDrawerToggle;
+public class LandingActivity extends GenericActivity implements ReportListFragment.OnFragmentInteractionListener {
 
 
     @Override
@@ -106,8 +105,7 @@ public class LandingActivity extends AppCompatActivity implements ReportListFrag
      * @param v represents the profile button
      */
     public void profileButtonPressed(View v) {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        switchActivity(ProfileActivity.class);
     }
 
     @Override
@@ -140,13 +138,10 @@ public class LandingActivity extends AppCompatActivity implements ReportListFrag
 
     /**
      * called on the press of the floating create report button
-     * @param v the view that contains the button being pressed
+     * @param v the create report button
      */
     public void createReportButtonPressed(View v) {
-        // probably will want to check the type of user and decide what to do based on that
-        Intent intent = new Intent(this, ReportActivity.class);
-        //animate the transition
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        switchActivity(ReportActivity.class);
     }
 
 

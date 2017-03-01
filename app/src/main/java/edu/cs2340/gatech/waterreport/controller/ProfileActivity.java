@@ -32,7 +32,7 @@ import edu.cs2340.gatech.waterreport.model.UserInformation;
  * @since   02/21/2017
  */
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends GenericActivity {
 
     private FirebaseUser mUser;
     // database
@@ -129,8 +129,6 @@ public class ProfileActivity extends AppCompatActivity {
      * @param v represents the button for changing Profile
      */
     public void changeProfileButtonPressed(View v) {
-        Intent intent = new Intent(this, LandingActivity.class);
-
         if (userInformation == null) {
             userInformation = new UserInformation();
         }
@@ -155,7 +153,7 @@ public class ProfileActivity extends AppCompatActivity {
             //System.out.println("password is " + mPasswordView.getText());
             mUser.updatePassword(mPasswordView.getText().toString());
         }
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        switchActivity(LandingActivity.class);
     }
 
     /**
@@ -164,24 +162,10 @@ public class ProfileActivity extends AppCompatActivity {
      */
     public void cancelProfileButtonPressed(View v) {
         //Back button and cancel button do the same thing anyways -Johnny
-        onBackPressed();
+        switchActivity(LandingActivity.class);
         /*
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         */
     }
-
-    /**
-     * Called when the activity has detected the user's press of the back key.
-     */
-    @Override
-    public void onBackPressed() {
-        //FirebaseAuth.getInstance().signOut();
-        //super.onBackPressed();
-        // so back doesn't exit app
-        super.onBackPressed();
-        //Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-        //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
 }

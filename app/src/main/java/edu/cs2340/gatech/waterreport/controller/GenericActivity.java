@@ -1,6 +1,7 @@
 package edu.cs2340.gatech.waterreport.controller;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,8 +24,10 @@ public abstract class GenericActivity extends AppCompatActivity {
     }
 
     protected void switchActivity(Class cls) {
+        // probably will want to check the type of user and decide what to do based on that
         Intent intent = new Intent(this, cls);
-        startActivity(intent);
+        //animate the transition
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     //if needed make another switchActivity to pass values to new Activity
@@ -36,10 +39,6 @@ public abstract class GenericActivity extends AppCompatActivity {
         this.finish();
     }
 
-
-    /**
-     * Called when the activity has detected the user's press of the back key.
-     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
