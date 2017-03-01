@@ -7,24 +7,22 @@ import java.util.Calendar;
  */
 
 public class WaterSourceReport {
-    private int day;
-    private int month;
-    private int year;
     private String date = "";
     private int number = 0;
 
     private String reporter;
-    private TypeOfWater twater;
-    private ConditionOfWater cwater;
+    private WaterType waterType;
+    private WaterCondition waterCondition;
 
     public WaterSourceReport() {
         Calendar temp = Calendar.getInstance();
-        day = temp.get(Calendar.DATE);
-        month = temp.get(Calendar.MONTH);
-        year = temp.get(Calendar.YEAR);
+        int day = temp.get(Calendar.DATE);
+        int month = temp.get(Calendar.MONTH);
+        int year = temp.get(Calendar.YEAR);
         date = "" + year + "/" + month + "/" + day;
         number++;
     }
+
     public String getDate() {
         return date;
     }
@@ -34,45 +32,10 @@ public class WaterSourceReport {
     public int getNumber() {
         return number;
     }
-    public TypeOfWater getTwater() {
-        return twater;
+    public WaterType getWaterType() {
+        return waterType;
     }
-    public ConditionOfWater getCwater() {
-        return cwater;
+    public WaterCondition getWaterCondition() {
+        return waterCondition;
     }
-
-
-    public enum TypeOfWater {
-        Bottled("Bottled"),
-        Well("Well"),
-        Stream("Stream"),
-        Lake("Lake"),
-        Spring("Spring"),
-        Other("Other");
-        private String type;
-        TypeOfWater(String input) {
-            type = input;
-        }
-        public String getType() {
-            return type;
-        }
-    }
-    public enum ConditionOfWater {
-        Waste("Waste"), TreatableClear("Treatable-Clear"),
-        TreatableMuddy("Treatable-Muddy"), Potable("Potable");
-        private String condition;
-        ConditionOfWater(String input) {
-            condition = input;
-        }
-        public String getCondition() {
-            return condition;
-        }
-
-
-    }
-
-
-
-
-
 }

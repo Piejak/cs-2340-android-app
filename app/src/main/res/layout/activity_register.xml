@@ -72,7 +72,7 @@
                 android:onClick="createAccount" />
 
             <TextView
-                android:text="@string/prompt_login"
+                android:text="@string/have_account_prompt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/already_registered_text"

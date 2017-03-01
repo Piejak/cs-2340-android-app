@@ -1,11 +1,17 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
-import android.transition.Explode;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,46 +24,99 @@ import com.google.firebase.auth.FirebaseUser;
  * @since   02/21/2017
  */
 public class LandingActivity extends GenericActivity {
+    private ActionBarDrawerToggle mDrawerToggle;
 
-    private FirebaseUser mUser;
 
-    /**
-     * called when the landing activity is starting.
-     * @param savedInstanceState the Bundle that maps form String key to various values. save the state of login Activity
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing);
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        setContentView(R.layout.drawer_layout_main);
+
+        // set up a custom toolbar so we can put icons in it
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        // this sets up the navdrawer as something that can be opened and closed
+        DrawerLayout navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                navDrawerLayout,         /* DrawerLayout object */
+                toolbar,
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        );
+
+        // set up the toggle button to correspond to our navdrawer
+        navDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        // set the icon in the action bar to be the three lines
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
+
+        // tells the navdrawer that it is closed right now
+        mDrawerToggle.syncState();
+
+        // when we first login, show the report list
+        if (savedInstanceState == null) {
+            Fragment fragment = null;
+            Class fragmentClass = ReportListFragment.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        }
+
+        // set up the drawer with the click listener that we have a method for
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                selectDrawerItem(menuItem);
+                return true;
+            }
+        });
+
+        // set the first item (reports) as being selected
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        // change the default header text to the user's email
+        View headerView = navigationView.getHeaderView(0);
+        TextView headerText = (TextView) headerView.findViewById(R.id.header_text);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            headerText.setText(user.getEmail());
+        }
     }
 
-    /**
-     * called when user click the logout button to logout
-     * @param v represents the logout button
-     */
-    public void logoutButtonPressed(View v) {
-        //Back button and logout button do the same thing anyways -Johnny
-        onBackPressed();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * called when user click the logout button to changing the landing Activity to ProfileActivity
-     * @param v represents the profile button
-     */
-    public void profileButtonPressed(View v) {
-        switchActivity(ProfileActivity.class);
-    }
 
-    /**
-     * Called when the activity has detected the user's press of the back key.
-     */
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        FirebaseAuth.getInstance().signOut();
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            switchActivityPermanently(LoginActivity.class);
+        }
     }
 
     /**
@@ -68,4 +127,53 @@ public class LandingActivity extends GenericActivity {
         switchActivity(ReportActivity.class);
     }
 
+
+    /**
+     * A method that handles the presses of the items in the navdrawer
+     * @param item the item that was selected
+     * @return true if the selection was successful
+     */
+    public boolean selectDrawerItem(MenuItem item) {
+
+        int id = item.getItemId();
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        CharSequence title = "Water Logged";
+        if (getSupportActionBar() != null) {
+            title = getSupportActionBar().getTitle();
+        }
+
+        // decide which button was pressed
+        if (id == R.id.nav_logout) {
+            switchActivityPermanently(LoginActivity.class);
+            return true;
+        } else if (id == R.id.nav_profile) {
+            // do stuff for profile
+            title = "Profile";
+            fragmentClass = ProfileFragment.class;
+        } else if (id == R.id.nav_reports) {
+            // show main page
+            title = "Water Reports";
+            fragmentClass = ReportListFragment.class;
+        }
+
+        //replace the frame layout with the content we want to show
+        if (fragmentClass != null) {
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        }
+
+        // close the navdrawer
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+        return true;
+    }
 }

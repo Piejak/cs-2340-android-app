@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
+    android:id="@+id/profile_layout"
     android:weightSum="1">
 
     <LinearLayout
@@ -17,16 +18,16 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:hint="Email"
+            android:hint="@string/prompt_email"
             android:id="@+id/profile_email" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/profile_password"
-            android:hint="New Password" />
+            android:hint="@string/prompt_password" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -81,7 +82,7 @@
             android:layout_weight="0.26"
             android:id="@+id/changeProfileButton"
             android:layout_width="125dp"
-            android:onClick="changeProfileButtonPressed" />
+            />
 
         <Button
             android:text="Cancel"
@@ -89,6 +90,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/cancelProfileButton"
             android:layout_weight="0.26"
-            android:onClick="cancelProfileButtonPressed" />
+            />
     </LinearLayout>
 </RelativeLayout>

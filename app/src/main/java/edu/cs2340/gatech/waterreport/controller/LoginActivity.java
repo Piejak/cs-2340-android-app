@@ -41,10 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
 
-    /**
-     * called when the login activity is starting.
-     * @param savedInstanceState the Bundle that maps form String key to various values. save the state of login Activity
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,10 +114,12 @@ public class LoginActivity extends AppCompatActivity {
      * @param v represents the Register button
      */
     public void createAccount(View v) {
+        showProgress();
         mAuth.createUserWithEmailAndPassword(mRegisterEmailView.getText().toString(), mRegisterPasswordView.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        hideProgress();
                         Log.d("LoginActivity", "mAuth:createUser:onComplete::" + task.isSuccessful());
 
                         if (!task.isSuccessful()) {
@@ -129,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Account creation failed", Toast.LENGTH_SHORT).show();
                         } else {
                             Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                     }
@@ -154,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                         } else {
                             Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                     }
