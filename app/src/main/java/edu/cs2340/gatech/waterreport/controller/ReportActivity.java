@@ -18,7 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.WaterCondition;
+import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 import edu.cs2340.gatech.waterreport.model.WaterType;
 
 
@@ -35,6 +37,7 @@ public class ReportActivity extends GenericActivity {
 
     private Spinner waterTypeSpinner;
     private Spinner waterConditionSpinner;
+    private Location location;
 
 
     @Override
@@ -95,6 +98,9 @@ public class ReportActivity extends GenericActivity {
      * @param v represents the button for cancel changing the profile
      */
     public void submitReportButtonPressed(View v) {
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
+        WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
+        WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition);
     }
 }
