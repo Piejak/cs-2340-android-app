@@ -98,6 +98,10 @@ public class ReportActivity extends GenericActivity {
      * @param v represents the button for cancel changing the profile
      */
     public void submitReportButtonPressed(View v) {
+        // TODO make this submit to firebase @Johnny
+        // maybe make the key the number of the report
+        // going to need to count the number of reports currently in the database
+        // and add location, there is a very basic location object in the model
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
         WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
