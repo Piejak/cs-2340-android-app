@@ -105,6 +105,7 @@ public class ReportActivity extends GenericActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
         WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
-        WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition);
+        int reportNumber = 0; // this needs to be retreived from firebase
+        WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition, reportNumber);
     }
 }
