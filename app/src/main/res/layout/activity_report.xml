@@ -18,34 +18,25 @@
         android:layout_height="wrap_content"
         android:id="@+id/location_layout"
         android:layout_below="@id/location_label"
+        android:orientation="vertical"
         >
-
-        <ImageButton
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/latitude_entry"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_location"
-            android:id="@+id/current_location"
-            android:contentDescription="@string/current_location"
-            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal|numberSigned"
+            android:hint="Latitude"
+            />
+        <EditText
+            android:id="@+id/longitude_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal|numberSigned"
+            android:hint="Longitude"
             />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_map_icon"
-            android:contentDescription="@string/current_location"
-            android:id="@+id/pick_location"
-            android:layout_weight="1"
-            />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_create_dark"
-            android:contentDescription="@string/location"
-            android:id="@+id/enter_location"
-            android:layout_weight="1"
-            />
     </LinearLayout>
 
     <TextView

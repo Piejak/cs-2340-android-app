@@ -15,17 +15,19 @@ public class WaterSourceReport {
     private FirebaseUser reporter;
     private WaterType waterType;
     private WaterCondition waterCondition;
+    private Location location;
 
     public WaterSourceReport() {
         // Default constructor required for calls to DataSnapshot.getValue(WaterSourceReport.class)
     }
 
-    public WaterSourceReport(FirebaseUser user, WaterType waterType, WaterCondition waterCondition, int number) {
+    public WaterSourceReport(FirebaseUser user, WaterType waterType, WaterCondition waterCondition, int number, Location location) {
         date = new Date();
         this.number = number;
         reporter = user;
         this.waterType = waterType;
         this.waterCondition = waterCondition;
+        this.location = location;
     }
 
     public int getNumber() {

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
@@ -38,6 +39,7 @@ public class ReportActivity extends GenericActivity {
     private Spinner waterTypeSpinner;
     private Spinner waterConditionSpinner;
     private Location location;
+    private int reportNumber;
 
 
     @Override
@@ -98,14 +100,41 @@ public class ReportActivity extends GenericActivity {
      * @param v represents the button for cancel changing the profile
      */
     public void submitReportButtonPressed(View v) {
-        // TODO make this submit to firebase @Johnny
-        // maybe make the key the number of the report
-        // going to need to count the number of reports currently in the database
-        // and add location, there is a very basic location object in the model
+        //submitting the report pushes it to firebase now
+        // TODO for some reason incrementing the report number doesn't work, need to fix that
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
         WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
-        int reportNumber = 0; // this needs to be retreived from firebase
-        WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition, reportNumber);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference reportNumberReference = mDatabase.child("reportNumber");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                reportNumber = dataSnapshot.getValue(Integer.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Report", databaseError.getMessage());
+            }
+
+        };
+        reportNumberReference.addListenerForSingleValueEvent(valueEventListener);
+        EditText latitudeEntry = (EditText) findViewById(R.id.latitude_entry);
+        EditText longitudeEntry = (EditText) findViewById(R.id.longitude_entry);
+        double latitude = Double.parseDouble(latitudeEntry.getText().toString());
+        double longitude = Double.parseDouble(longitudeEntry.getText().toString());
+        if (latitudeEntry.getText().toString().equals("")) {
+            // show a snackbar saying that the latitude is required
+        } else if (longitudeEntry.getText().toString().equals("")) {
+            // show a snackbar saying that the longitude is required
+        } else {
+            Location location = new Location(latitude, longitude);
+            WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition, reportNumber, location);
+            mDatabase.child("sourceReports").child("" + reportNumber).setValue(report);
+            reportNumber++;
+            reportNumberReference.setValue(reportNumber);
+            switchActivity(LandingActivity.class);
+        }
     }
 }
