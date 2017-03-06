@@ -61,4 +61,8 @@ public class WaterSourceReport {
     public void setWaterCondition(WaterCondition waterCondition) {
         this.waterCondition = waterCondition;
     }
+
+    public Location getLocation() {
+        return location;
+    }
 }

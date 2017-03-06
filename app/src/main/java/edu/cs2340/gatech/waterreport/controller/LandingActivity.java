@@ -8,13 +8,28 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
+import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 /**
  * A landing screen that user can logout or view the profile
@@ -25,75 +40,59 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class LandingActivity extends GenericActivity {
     private ActionBarDrawerToggle mDrawerToggle;
-
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private ArrayList<WaterSourceReport> reportList;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawer_layout_main);
+        setContentView(R.layout.activity_landing);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        reportList = new ArrayList<>();
 
-        // set up a custom toolbar so we can put icons in it
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // start putting things into the recycler view
+        mRecyclerView = (RecyclerView) findViewById(R.id.card_views);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        System.out.println(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-
-        // this sets up the navdrawer as something that can be opened and closed
-        DrawerLayout navDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                navDrawerLayout,         /* DrawerLayout object */
-                toolbar,
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        );
-
-        // set up the toggle button to correspond to our navdrawer
-        navDrawerLayout.addDrawerListener(mDrawerToggle);
-
-        // set the icon in the action bar to be the three lines
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
-
-        // tells the navdrawer that it is closed right now
-        mDrawerToggle.syncState();
-
-        // when we first login, show the report list
-        if (savedInstanceState == null) {
-            Fragment fragment = null;
-            Class fragmentClass = ReportListFragment.class;
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-        }
-
-        // set up the drawer with the click listener that we have a method for
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        // populating the list and setting adapter for the activity
+        ValueEventListener reportsListener = new ValueEventListener() {
+            /**
+             *getting reports class from database
+             * @param dataSnapshot the file Filebase Database location.
+             */
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                selectDrawerItem(menuItem);
-                return true;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get reports object and use the values to update the UI
+                for (DataSnapshot postSnapshot : dataSnapshot.child("sourceReports").getChildren()) {
+                    WaterSourceReport newReport = postSnapshot.getValue(WaterSourceReport.class);
+                    reportList.add(newReport);
+                }
+
             }
-        });
 
-        // set the first item (reports) as being selected
-        navigationView.getMenu().getItem(0).setChecked(true);
 
-        // change the default header text to the user's email
-        View headerView = navigationView.getHeaderView(0);
-        TextView headerText = (TextView) headerView.findViewById(R.id.header_text);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            headerText.setText(user.getEmail());
-        }
+            /**
+             * runs after there exist a DatabaseError
+             * @param databaseError Used to an error it received from interacting with the storage layer.
+             */
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting user info failed, log a message
+                Log.w("User Information",
+                        "loadreports:onCancelled", databaseError.toException());
+            }
+        };
+        mDatabase.addValueEventListener(reportsListener);
+        mAdapter = new ReportAdapter(reportList);
+        mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
