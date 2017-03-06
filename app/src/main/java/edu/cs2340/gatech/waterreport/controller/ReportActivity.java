@@ -59,31 +59,6 @@ public class ReportActivity extends GenericActivity {
         waterConditionSpinner.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, WaterCondition.values()));
 
-        ValueEventListener userInformationListener = new ValueEventListener() {
-            /**
-             *getting UserInformation class from database
-             * @param dataSnapshot the file Filebase Database location.
-             */
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get UserInformation object and use the values to update the UI
-                // TODO grab reports from server
-                //userInformation = dataSnapshot.child("users").child(mUser.getUid()).getValue(UserInformation.class);
-            }
-
-
-            /**
-             * runs after there exist a DatabaseError
-             * @param databaseError Used to an error it received from interacting with the storage layer.
-             */
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting user info failed, log a message
-                Log.w("User Information",
-                        "loadUserInformation:onCancelled", databaseError.toException());
-            }
-        };
-        mDatabase.addValueEventListener(userInformationListener);
     }
 
 
@@ -106,11 +81,10 @@ public class ReportActivity extends GenericActivity {
         WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
         WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference reportNumberReference = mDatabase.child("reportNumber");
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                reportNumber = dataSnapshot.getValue(Integer.class);
+                reportNumber = dataSnapshot.child("reportNumber").getValue(Integer.class);
             }
 
             @Override
@@ -119,7 +93,7 @@ public class ReportActivity extends GenericActivity {
             }
 
         };
-        reportNumberReference.addListenerForSingleValueEvent(valueEventListener);
+        mDatabase.addValueEventListener(valueEventListener);
         EditText latitudeEntry = (EditText) findViewById(R.id.latitude_entry);
         EditText longitudeEntry = (EditText) findViewById(R.id.longitude_entry);
         double latitude = Double.parseDouble(latitudeEntry.getText().toString());
@@ -130,10 +104,10 @@ public class ReportActivity extends GenericActivity {
             // show a snackbar saying that the longitude is required
         } else {
             Location location = new Location(latitude, longitude);
+            reportNumber++;
             WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition, reportNumber, location);
             mDatabase.child("sourceReports").child("" + reportNumber).setValue(report);
-            reportNumber++;
-            reportNumberReference.setValue(reportNumber);
+            mDatabase.child("reportNumber").setValue(reportNumber);
             switchActivity(LandingActivity.class);
         }
     }
