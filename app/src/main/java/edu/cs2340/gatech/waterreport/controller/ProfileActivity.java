@@ -153,7 +153,7 @@ public class ProfileActivity extends GenericActivity {
             //System.out.println("password is " + mPasswordView.getText());
             mUser.updatePassword(mPasswordView.getText().toString());
         }
-        switchActivity(LandingActivity.class);
+        switchActivityPermanently(LandingActivity.class);
     }
 
     /**
@@ -162,7 +162,7 @@ public class ProfileActivity extends GenericActivity {
      */
     public void cancelProfileButtonPressed(View v) {
         //Back button and cancel button do the same thing anyways -Johnny
-        switchActivity(LandingActivity.class);
+        switchActivityPermanently(LandingActivity.class);
         /*
         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
