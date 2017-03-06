@@ -106,7 +106,7 @@ public class ReportActivity extends GenericActivity {
             Location location = new Location(latitude, longitude);
             reportNumber++;
             WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition, reportNumber, location);
-            mDatabase.child("sourceReports").child("" + reportNumber).setValue(report);
+            mDatabase.child("sourceReports").push().setValue(report);
             mDatabase.child("reportNumber").setValue(reportNumber);
             switchActivity(LandingActivity.class);
         }
