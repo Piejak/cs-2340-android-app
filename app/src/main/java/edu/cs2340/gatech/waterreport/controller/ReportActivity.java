@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.cs2340.gatech.waterreport.model.Location;
+import edu.cs2340.gatech.waterreport.model.User;
 import edu.cs2340.gatech.waterreport.model.WaterCondition;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 import edu.cs2340.gatech.waterreport.model.WaterType;
@@ -105,7 +106,8 @@ public class ReportActivity extends GenericActivity {
         } else {
             Location location = new Location(latitude, longitude);
             reportNumber++;
-            WaterSourceReport report = new WaterSourceReport(user, waterType, waterCondition, reportNumber, location);
+            User localUser = new User(user.getEmail(), user.getUid());
+            WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
             mDatabase.child("sourceReports").push().setValue(report);
             mDatabase.child("reportNumber").setValue(reportNumber);
             switchActivity(LandingActivity.class);
