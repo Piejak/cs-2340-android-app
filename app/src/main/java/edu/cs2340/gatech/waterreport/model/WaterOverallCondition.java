@@ -1,13 +1,13 @@
 package edu.cs2340.gatech.waterreport.model;
 
 /**
- * Enum representation of the condition of a water source
+ * Enum representation of the overall condition of a water source for use with water
+ * purity reports
  */
-public enum WaterCondition {
-    Waste("Waste"),
-    TreatableClear("Treatable-Clear"),
-    TreatableMuddy("Treatable-Muddy"),
-    Potable("Potable");
+public enum WaterOverallCondition {
+    Safe("Safe"),
+    Treatable("Treatable"),
+    Unsafe("Unsafe");
 
     private String condition;
 
@@ -15,7 +15,7 @@ public enum WaterCondition {
      * Create a new water condition with the condition passed in as a string
      * @param input the condition of the water
      */
-    WaterCondition(String input) {
+    WaterOverallCondition(String input) {
         condition = input;
     }
 

@@ -1,10 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,7 +27,6 @@ import edu.cs2340.gatech.waterreport.model.UserInformation;
  * @version 1.0
  * @since   02/21/2017
  */
-
 public class ProfileActivity extends GenericActivity {
 
     private FirebaseUser mUser;
@@ -51,10 +46,6 @@ public class ProfileActivity extends GenericActivity {
     // user profile stored in firebase
     private UserInformation userInformation;
 
-    /**
-     * called when the activity is starting.
-     * @param savedInstanceState  the Bundle that maps form String key to various values.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

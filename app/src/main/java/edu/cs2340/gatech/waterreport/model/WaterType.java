@@ -1,9 +1,8 @@
 package edu.cs2340.gatech.waterreport.model;
 
 /**
- * Created by brianpiejak on 3/1/17.
+ * Enum representation of the water type of a water source
  */
-
 public enum WaterType {
     Bottled("Bottled"),
     Well("Well"),
@@ -14,6 +13,10 @@ public enum WaterType {
 
     private String type;
 
+    /**
+     * construct a new water type
+     * @param input the type of the water
+     */
     WaterType(String input) {
         type = input;
     }

@@ -1,7 +1,5 @@
 package edu.cs2340.gatech.waterreport.model;
 
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.Date;
 
 /**
@@ -31,9 +29,9 @@ public class WaterSourceReport {
      * @param location the location of the water source
      */
     public WaterSourceReport(User user, WaterType waterType, WaterCondition waterCondition, int number, Location location) {
-        date = new Date();
+        this.date = new Date();
         this.number = number;
-        reporter = user;
+        this.reporter = user;
         this.waterType = waterType;
         this.waterCondition = waterCondition;
         this.location = location;

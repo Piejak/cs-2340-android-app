@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 /**
- * Created by brianpiejak on 3/5/17.
+ * Adapter that handles the recycler view for reports
  */
-
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private ArrayList<WaterSourceReport> mDataset;
 
+    /**
+     * Inner view holder class that assigns view elements for each card in the recycler view
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mUserText;
         public TextView mDateText;
@@ -33,19 +35,21 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * Creates a new report adapter
+     * @param waterSourceReports the list of source reports that should be viewed in a list on the
+     *                           main screen
+     */
     public ReportAdapter(ArrayList<WaterSourceReport> waterSourceReports) {
         mDataset = waterSourceReports;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ReportAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.report_card_view,
                 parent, false));
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -56,7 +60,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         holder.mTypeText.setText(mDataset.get(position).getWaterType().toString());
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset.size();

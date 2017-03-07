@@ -31,7 +31,6 @@ import edu.cs2340.gatech.waterreport.model.UserInformation;
  * @version 1.0
  * @since   02/21/2017
  */
-
 public class ProfileFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     private FirebaseUser mUser;

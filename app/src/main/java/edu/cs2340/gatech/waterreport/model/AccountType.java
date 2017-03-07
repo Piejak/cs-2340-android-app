@@ -18,7 +18,10 @@ public enum AccountType implements java.io.Serializable {
 
     private final String name;
 
-
+    /**
+     * Account type constructor, takes the name of the account type
+     * @param name the string that represents the level of the user's account
+     */
     AccountType(String name) {
         this.name = name;
     }
@@ -30,10 +33,14 @@ public enum AccountType implements java.io.Serializable {
         this("Select an Account Type");
     }
 
-    //getName of enum
+    /**
+     * getter for the type of user
+     * @return type of user as a string
+     */
     public String getName() {
         return name;
     }
 
+    @Override
     public String toString() { return name; }
 }

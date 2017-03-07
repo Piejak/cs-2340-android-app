@@ -2,7 +2,6 @@ package edu.cs2340.gatech.waterreport.controller;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -160,6 +159,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Displays a rotating progress indicator when the user is logging in or registering
+     */
     public void showProgress() {
         // previously invisible view
         View myView = findViewById(R.id.login_progress);
@@ -180,6 +182,9 @@ public class LoginActivity extends AppCompatActivity {
         anim.start();
     }
 
+    /**
+     * Hides the progress indicator when the login or signup is complete
+     */
     public void hideProgress() {
         // previously visible view
         final View myView = findViewById(R.id.login_progress);

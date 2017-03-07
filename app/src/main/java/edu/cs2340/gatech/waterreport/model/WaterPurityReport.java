@@ -1,65 +1,70 @@
 package edu.cs2340.gatech.waterreport.model;
 
-
-import java.util.Calendar;
+import java.util.Date;
 
 /**
- * Created by yudong on 17/2/25.
+ * Class representing a water purity report
  */
-
 public class WaterPurityReport {
-    private int day;
-    private int month;
-    private int year;
-    private String date = "";
-    private int number = 0;
 
-    private OverallCondition ocondition;
+    private Date date;
+    private int number;
 
-    private String worker;
-    private int virus;
-    private int contaminant;
+    private WaterOverallCondition overallCondition;
 
+    private User worker;
+    private Location location;
+    private int virusPPM;
+    private int contaminantPPM;
+
+    /**
+     * No arg constructor needed for Firebase
+     */
     public WaterPurityReport() {
-        Calendar temp = Calendar.getInstance();
-        day = temp.get(Calendar.DATE);
-        month = temp.get(Calendar.MONTH);
-        year = temp.get(Calendar.YEAR);
-        date = "" + year + "/" + month + "/" + day;
-        number++;
+
     }
-    public String getDate() {
+
+
+    /**
+     * Constructor to make a new Water purity report
+     * @param user The user that created the report
+     * @param overallCondition the overall condition of the water
+     * @param number the report number
+     * @param location The location of the water source being represented
+     * @param virusPPM the amount of virus contaminant in the water in parts per million
+     * @param contaminantPPM the amount of contaminant in the water in parts per million
+     */
+    public WaterPurityReport(User user, WaterOverallCondition overallCondition, int number, Location location, int virusPPM, int contaminantPPM) {
+        this.date = new Date();
+        this.worker = user;
+        this.overallCondition =  overallCondition;
+        this.number = number;
+        this.location = location;
+        this.virusPPM = virusPPM;
+        this.contaminantPPM = contaminantPPM;
+    }
+
+    /**
+     * Gets the date that the report was created
+     * @return date object from the creation of the report
+     */
+    public Date getDate() {
         return date;
     }
-    public String getWorker() {
+
+    /**
+     * get the user that created the report
+     * @return user object that created the report
+     */
+    public User getReporter() {
         return worker;
     }
-    public int getNumber() {
-        return number;
+
+    /**
+     * gets the overall condition of the water
+     * @return enum representing the condition of the water
+     */
+    public WaterOverallCondition getWaterOverallCondition() {
+        return overallCondition;
     }
-    public int getVirus() {
-        return virus;
-    }
-    public int getContaminant() {
-        return contaminant;
-    }
-    public OverallCondition getOcondition() {
-        return ocondition;
-    }
-
-    public enum OverallCondition {
-        Safe("Safe"), Treatable("Treatable"), Unsafe("Unsafe");
-        private String overall;
-        OverallCondition(String input) {
-            overall = input;
-        }
-        public String getOverall() {
-            return overall;
-        }
-    }
-
-
-
-
-
 }

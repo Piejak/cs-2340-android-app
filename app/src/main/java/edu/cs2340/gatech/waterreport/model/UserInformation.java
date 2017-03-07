@@ -1,7 +1,5 @@
 package edu.cs2340.gatech.waterreport.model;
 
-import java.util.Map;
-
 /**
  * the UserInformation class used to store the User's information.
  *

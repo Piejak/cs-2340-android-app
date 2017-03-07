@@ -1,14 +1,10 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +25,6 @@ import edu.cs2340.gatech.waterreport.model.WaterType;
 /**
  * Controller class for reports
  */
-
 public class ReportActivity extends GenericActivity {
 
     //private FirebaseAuth mAuth;

@@ -1,18 +1,14 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +22,7 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment for controlling the list of water source reports
  */
 public class ReportListFragment extends android.support.v4.app.Fragment implements View.OnClickListener{
     private RecyclerView mRecyclerView;
@@ -35,6 +31,9 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
     private ArrayList<WaterSourceReport> waterSourceReports = new ArrayList<>();
 
 
+    /**
+     * Required empty constructed due to Fragment superclass
+     */
     public ReportListFragment() {
         // Required empty public constructor
     }
