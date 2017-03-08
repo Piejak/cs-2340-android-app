@@ -101,7 +101,7 @@ public class ReportActivity extends GenericActivity {
         } else {
             Location location = new Location(latitude, longitude);
             reportNumber++;
-            User localUser = new User(user.getEmail(), user.getUid());
+            User localUser = new User(user.getEmail(), user.getUid(), null);
             WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
             mDatabase.child("sourceReports").push().setValue(report);
             mDatabase.child("reportNumber").setValue(reportNumber);

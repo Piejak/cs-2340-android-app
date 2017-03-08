@@ -29,14 +29,32 @@ public class SecurityLog {
         logs.add("ACCOUNT_DELETE " + timestamp.toString() + " " +  adminId + " " + userId);
     }
 
+    /**
+     * Logs the banning of an account
+     * @param timestamp the time at which the account was banned
+     * @param adminId the admin that banned the account
+     * @param userId the user that was banned
+     */
     public static void logAccountBan(Date timestamp, String adminId, String userId) {
         logs.add("BAN " + timestamp.toString() + " " +  adminId + " " + userId);
     }
 
+    /**
+     * Logs the unblocking of an account
+     * @param timestamp the time the account was unblocked
+     * @param adminId the admin that unblocked the account
+     * @param userId the user that was unblocked
+     */
     public static void logAccountUnblock(Date timestamp, String adminId, String userId) {
         logs.add("UNBLOCK " + timestamp.toString() + " " +  adminId + " " + userId);
     }
 
+    /**
+     * Logs the deletion of a report
+     * @param timestamp the time the report was deleted
+     * @param managerId the manager that deleted the report
+     * @param reportId the report that was deleted
+     */
     public static void logReportDelete(Date timestamp, String managerId, String reportId) {
         logs.add("REPORT_DELETE " + timestamp.toString() + " " +  managerId + " " + reportId);
     }

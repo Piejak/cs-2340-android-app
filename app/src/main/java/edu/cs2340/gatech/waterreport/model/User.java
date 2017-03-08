@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     public String email;
     public String uid;
+    public UserInformation userInformation;
 
     /**
      * Default constructor used for serializable
@@ -20,10 +21,12 @@ public class User implements Serializable {
      * Create a new user representation
      * @param email the user's email
      * @param uid the unique identifier of the user
+     * @param userInformation the user information object associated with the user
      */
-    public User(String email, String uid) {
+    public User(String email, String uid, UserInformation userInformation) {
         this.email = email;
         this.uid = uid;
+        this.userInformation = userInformation;
     }
 
     @Override
