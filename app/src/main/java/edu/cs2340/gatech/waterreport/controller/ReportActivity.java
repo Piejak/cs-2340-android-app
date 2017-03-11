@@ -1,6 +1,7 @@
 package edu.cs2340.gatech.waterreport.controller;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -55,6 +56,21 @@ public class ReportActivity extends GenericActivity {
         waterConditionSpinner.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, WaterCondition.values()));
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                reportNumber = dataSnapshot.child("reportNumber").getValue(Integer.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Report", databaseError.getMessage());
+            }
+
+        };
+        mDatabase.addValueEventListener(valueEventListener);
+
     }
 
 
@@ -72,24 +88,10 @@ public class ReportActivity extends GenericActivity {
      */
     public void submitReportButtonPressed(View v) {
         //submitting the report pushes it to firebase now
-        // TODO for some reason incrementing the report number doesn't work, need to fix that
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
         WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                reportNumber = dataSnapshot.child("reportNumber").getValue(Integer.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("Report", databaseError.getMessage());
-            }
-
-        };
-        mDatabase.addValueEventListener(valueEventListener);
+        System.out.println("after snapshot is " + reportNumber);
         EditText latitudeEntry = (EditText) findViewById(R.id.latitude_entry);
         EditText longitudeEntry = (EditText) findViewById(R.id.longitude_entry);
         double latitude = Double.parseDouble(latitudeEntry.getText().toString());
