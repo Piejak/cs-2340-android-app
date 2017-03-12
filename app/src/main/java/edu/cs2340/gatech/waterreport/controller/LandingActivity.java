@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -155,6 +156,10 @@ public class LandingActivity extends GenericActivity {
             // show main page
             title = "Water Reports";
             fragmentClass = ReportListFragment.class;
+        } else if (id == R.id.nav_map) {
+            // go to map of reports
+            title = "Map";
+            fragmentClass = MapFragment.class;
         }
 
         //replace the frame layout with the content we want to show

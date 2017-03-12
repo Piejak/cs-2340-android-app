@@ -1,5 +1,7 @@
 package edu.cs2340.gatech.waterreport.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 
 /**
@@ -12,7 +14,7 @@ public class WaterSourceReport {
     private User reporter;
     private WaterType waterType;
     private WaterCondition waterCondition;
-    private Location location;
+    private LatLng location;
 
     /**
      * No arg constructor for Firebase
@@ -28,7 +30,7 @@ public class WaterSourceReport {
      * @param number the report number
      * @param location the location of the water source
      */
-    public WaterSourceReport(User user, WaterType waterType, WaterCondition waterCondition, int number, Location location) {
+    public WaterSourceReport(User user, WaterType waterType, WaterCondition waterCondition, int number, LatLng location) {
         this.date = new Date();
         this.number = number;
         this.reporter = user;

@@ -1,5 +1,7 @@
 package edu.cs2340.gatech.waterreport.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 
 /**
@@ -13,7 +15,7 @@ public class WaterPurityReport {
     private WaterOverallCondition overallCondition;
 
     private User worker;
-    private Location location;
+    private LatLng location;
     private int virusPPM;
     private int contaminantPPM;
 
@@ -34,7 +36,7 @@ public class WaterPurityReport {
      * @param virusPPM the amount of virus contaminant in the water in parts per million
      * @param contaminantPPM the amount of contaminant in the water in parts per million
      */
-    public WaterPurityReport(User user, WaterOverallCondition overallCondition, int number, Location location, int virusPPM, int contaminantPPM) {
+    public WaterPurityReport(User user, WaterOverallCondition overallCondition, int number, LatLng location, int virusPPM, int contaminantPPM) {
         this.date = new Date();
         this.worker = user;
         this.overallCondition =  overallCondition;

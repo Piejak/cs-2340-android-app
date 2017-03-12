@@ -4,4 +4,4 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.cs2340.gatech.waterreport.controller.MapActivity" />
+    tools:context="edu.cs2340.gatech.waterreport.controller.MapFragment" />

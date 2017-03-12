@@ -1,13 +1,13 @@
 package edu.cs2340.gatech.waterreport.controller;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.User;
 import edu.cs2340.gatech.waterreport.model.WaterCondition;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
@@ -35,7 +34,7 @@ public class ReportActivity extends GenericActivity {
 
     private Spinner waterTypeSpinner;
     private Spinner waterConditionSpinner;
-    private Location location;
+    private LatLng location;
     private int reportNumber;
 
 
@@ -74,11 +73,13 @@ public class ReportActivity extends GenericActivity {
     }
 
     public void currentLocationButtonPressed(View v) {
+        // pause and save state then switch state to map and grab a latitude/longitude from map
         // TODO
         switchActivity(LandingActivity.class);
     }
 
     public void pickLocationButtonPressed(View v) {
+        // pause and save state then switch state to map and grab a latitude/longitude from map
         //TODO
         switchActivity(LandingActivity.class);
     }
@@ -111,7 +112,7 @@ public class ReportActivity extends GenericActivity {
         } else if (longitudeEntry.getText().toString().equals("")) {
             // show a snackbar saying that the longitude is required
         } else {
-            Location location = new Location(latitude, longitude);
+            LatLng location = new LatLng(latitude, longitude);
             reportNumber++;
             User localUser = new User(user.getEmail(), user.getUid(), null);
             WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
