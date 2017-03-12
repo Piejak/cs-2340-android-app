@@ -18,24 +18,53 @@
         android:layout_height="wrap_content"
         android:id="@+id/location_layout"
         android:layout_below="@id/location_label"
-        android:orientation="vertical"
         >
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_location"
+            android:id="@+id/current_location"
+            android:onClick="currentLocationButtonPressed"
+            android:contentDescription="@string/current_location"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_map_icon"
+            android:onClick="pickLocationButtonPressed"
+            android:contentDescription="@string/pick_location_on_map"
+            android:id="@+id/pick_location"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/latitude_longitude_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/location_layout"
+        android:layout_alignParentStart="true">
+
         <EditText
             android:id="@+id/latitude_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="numberDecimal|numberSigned"
             android:hint="Latitude"
-            />
+            android:inputType="numberDecimal|numberSigned" />
+
         <EditText
             android:id="@+id/longitude_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="numberDecimal|numberSigned"
             android:hint="Longitude"
-            />
+            android:inputType="numberDecimal|numberSigned" />
 
     </LinearLayout>
 
@@ -44,32 +73,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/type_label"
-        android:layout_below="@id/location_layout"
-        android:layout_marginTop="16dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Large" />
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_below="@+id/latitude_longitude_entry"
+        android:layout_alignParentStart="true" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/type_spinner"
-        android:layout_below="@id/type_label"
-        />
+        android:layout_below="@+id/type_label"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="@string/condition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/condition_label"
-        android:layout_below="@id/type_spinner"
-        android:layout_marginTop="16dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Large" />
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_below="@+id/type_spinner"
+        android:layout_alignParentStart="true" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/condition_spinner"
-        android:layout_below="@id/condition_label"
-        />
+        android:layout_below="@+id/condition_label"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/submit"
@@ -77,8 +106,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/submit_report"
         android:onClick="submitReportButtonPressed"
-        android:layout_below="@id/condition_spinner"
-        />
+        android:layout_below="@+id/condition_spinner"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/cancel"
@@ -86,8 +115,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/cancel_report"
         android:onClick="cancelReportButtonPressed"
-        android:layout_below="@id/submit_report"
-        />
+        android:layout_below="@+id/submit_report"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

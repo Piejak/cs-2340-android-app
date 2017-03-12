@@ -33,5 +33,8 @@
     <string name="prompt_register">Don\'t have an account?</string>
     <string name="prompt_reset_email">Please enter your email address below</string>
     <string name="reset_password">Reset Password</string>
+    <string name="pick_location_on_map">Pick location on map</string>
+    <string name="enter_location">Enter latitude and longitude</string>
+
 
 </resources>

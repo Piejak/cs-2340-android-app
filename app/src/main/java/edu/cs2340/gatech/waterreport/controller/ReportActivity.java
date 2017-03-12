@@ -73,6 +73,16 @@ public class ReportActivity extends GenericActivity {
 
     }
 
+    public void currentLocationButtonPressed(View v) {
+        // TODO
+        switchActivity(LandingActivity.class);
+    }
+
+    public void pickLocationButtonPressed(View v) {
+        //TODO
+        switchActivity(LandingActivity.class);
+    }
+
 
     /**
      * called when user click the cancel report Button.
