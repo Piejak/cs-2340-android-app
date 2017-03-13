@@ -20,9 +20,11 @@ import java.util.ArrayList;
 
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
-
 /**
  * Fragment for controlling the list of water source reports
+ * @author  Johnny Lee, Brian Piejak, Yudong Shao, Hui Li, Jimmy Dinh-Nguyen
+ * @version 1.0
+ * @since   03/1/2017
  */
 public class ReportListFragment extends android.support.v4.app.Fragment implements View.OnClickListener{
     private RecyclerView mRecyclerView;

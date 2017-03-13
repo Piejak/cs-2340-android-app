@@ -37,6 +37,13 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
     private ArrayList<WaterSourceReport> waterSourceReports = new ArrayList<>();
 
 
+    /**
+     * Create the screen view
+     * @param inflater converts xml into the view
+     * @param container view group
+     * @param savedInstanceState instance state
+     * @return the wanted view for the fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,6 +130,9 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
     }
 
+    /**
+     * Inner class for data screen for each of the pins/markers
+     */
     class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         private final View myContentsView;
