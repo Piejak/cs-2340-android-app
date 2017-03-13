@@ -12,6 +12,9 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 /**
  * Adapter that handles the recycler view for reports
+ * @author  Johnny Lee, Brian Piejak, Yudong Shao, Hui Li, Jimmy Dinh-Nguyen
+ * @version 1.0
+ * @since   03/1/2017
  */
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private ArrayList<WaterSourceReport> mDataset;
@@ -59,6 +62,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         holder.mConditionText.setText(mDataset.get(position).getWaterCondition().toString());
         holder.mTypeText.setText(mDataset.get(position).getWaterType().toString());
     }
+
 
     @Override
     public int getItemCount() {
