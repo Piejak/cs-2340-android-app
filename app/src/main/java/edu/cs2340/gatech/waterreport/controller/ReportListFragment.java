@@ -59,6 +59,7 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
                     WaterSourceReport report = postSnapshot.getValue(WaterSourceReport.class);
                     waterSourceReports.add(report);
                 }
+                mAdapter.notifyDataSetChanged();
 
             }
 
@@ -75,7 +76,6 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
 
         mAdapter = new ReportAdapter(waterSourceReports);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override

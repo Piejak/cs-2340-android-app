@@ -13,41 +13,40 @@
         android:id="@+id/location_label"
         android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/location_layout"
-        android:layout_below="@id/location_label"
-        >
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/location_layout"-->
+        <!--android:layout_below="@id/location_label"-->
+        <!--&gt;-->
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_location"
-            android:id="@+id/current_location"
-            android:onClick="currentLocationButtonPressed"
-            android:contentDescription="@string/current_location"
-            android:layout_weight="1"
-            />
+        <!--<ImageButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@drawable/ic_location"-->
+            <!--android:id="@+id/current_location"-->
+            <!--android:onClick="currentLocationButtonPressed"-->
+            <!--android:contentDescription="@string/current_location"-->
+            <!--android:layout_weight="1"-->
+            <!--/>-->
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_map_icon"
-            android:onClick="pickLocationButtonPressed"
-            android:contentDescription="@string/pick_location_on_map"
-            android:id="@+id/pick_location"
-            android:layout_weight="1"
-            />
+        <!--<ImageButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@drawable/ic_map_icon"-->
+            <!--android:onClick="pickLocationButtonPressed"-->
+            <!--android:contentDescription="@string/pick_location_on_map"-->
+            <!--android:id="@+id/pick_location"-->
+            <!--android:layout_weight="1"-->
+            <!--/>-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/latitude_longitude_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/location_layout"
         android:layout_alignParentStart="true">
 
         <EditText
