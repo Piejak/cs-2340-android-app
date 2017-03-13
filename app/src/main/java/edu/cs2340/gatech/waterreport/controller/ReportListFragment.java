@@ -75,7 +75,7 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
 
         mAdapter = new ReportAdapter(waterSourceReports);
         mRecyclerView.setAdapter(mAdapter);
-
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

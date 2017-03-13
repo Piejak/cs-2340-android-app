@@ -14,7 +14,7 @@ public class WaterSourceReport {
     private User reporter;
     private WaterType waterType;
     private WaterCondition waterCondition;
-    private LatLng location;
+    private Location location;
 
     /**
      * No arg constructor for Firebase
@@ -30,7 +30,7 @@ public class WaterSourceReport {
      * @param number the report number
      * @param location the location of the water source
      */
-    public WaterSourceReport(User user, WaterType waterType, WaterCondition waterCondition, int number, LatLng location) {
+    public WaterSourceReport(User user, WaterType waterType, WaterCondition waterCondition, int number, Location location) {
         this.date = new Date();
         this.number = number;
         this.reporter = user;
@@ -69,5 +69,9 @@ public class WaterSourceReport {
      */
     public WaterCondition getWaterCondition() {
         return waterCondition;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 }

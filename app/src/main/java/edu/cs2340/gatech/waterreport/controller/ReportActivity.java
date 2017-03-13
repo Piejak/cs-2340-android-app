@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.User;
 import edu.cs2340.gatech.waterreport.model.WaterCondition;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
@@ -112,7 +113,7 @@ public class ReportActivity extends GenericActivity {
         } else if (longitudeEntry.getText().toString().equals("")) {
             // show a snackbar saying that the longitude is required
         } else {
-            LatLng location = new LatLng(latitude, longitude);
+            Location location = new Location(latitude, longitude);
             reportNumber++;
             User localUser = new User(user.getEmail(), user.getUid(), null);
             WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
