@@ -32,9 +32,11 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
  * @since   03/5/2017
  */
 
-public class MapFragment extends android.support.v4.app.Fragment implements OnMapReadyCallback{
+public class MapFragment extends android.support.v4.app.Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ArrayList<WaterSourceReport> waterSourceReports = new ArrayList<>();
+    private SupportMapFragment mapFragment;
+    private OnMapReadyCallback asyncThisReference = this;
 
 
     /**
@@ -55,6 +57,9 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
+
         DatabaseReference reportsDB = FirebaseDatabase.getInstance().getReference().child("sourceReports");
         reportsDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,7 +69,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                     WaterSourceReport report = postSnapshot.getValue(WaterSourceReport.class);
                     waterSourceReports.add(report);
                 }
-
+                mapFragment.getMapAsync(asyncThisReference);
             }
 
             @Override
@@ -73,10 +78,34 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
             }
         });
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(this);
+        DatabaseReference reportsDB = FirebaseDatabase.getInstance().getReference().child("sourceReports");
+        reportsDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("Count " , "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    WaterSourceReport report = postSnapshot.getValue(WaterSourceReport.class);
+                    waterSourceReports.add(report);
+                    Log.e("Report " , "" + report);
+                }
+                mapFragment.getMapAsync(asyncThisReference);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("The read failed: " , databaseError.getMessage());
+            }
+        });
     }
 
     /**
@@ -92,34 +121,6 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         // Setting a click event handler for the map
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-
-
-                // Creating a marker
-                MarkerOptions markerOptions = new MarkerOptions();
-
-                // Setting the position for the marker
-                markerOptions.position(latLng);
-
-
-
-                // Clears the previously touched position
-                // mMap.clear();
-
-                // Setting the title for the marker.
-                // This will be displayed on taping the marker
-
-                // Animating to the touched position
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                // Placing a marker on the touched position
-                mMap.addMarker(markerOptions);
-            }
-        });
         for (WaterSourceReport r : waterSourceReports) {
             Location location = r.getLocation();
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
