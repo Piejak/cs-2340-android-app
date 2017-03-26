@@ -108,7 +108,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         });
     }
 
-    /**
+    /*
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
@@ -131,7 +131,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
     }
 
-    /**
+    /*
      * Inner class for data screen for each of the pins/markers
      */
     class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
