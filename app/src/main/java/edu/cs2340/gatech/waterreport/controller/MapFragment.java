@@ -77,9 +77,6 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                 Log.e("The read failed: " , databaseError.getMessage());
             }
         });
-
-
-
     }
 
     @Override
