@@ -6,13 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="@string/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/location_label"
-        android:textAppearance="@android:style/TextAppearance.Material.Large" />
-
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
@@ -48,6 +41,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/location_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/location"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <EditText
             android:id="@+id/latitude_entry"
@@ -93,11 +93,11 @@
         android:layout_alignParentStart="true" />
 
     <Spinner
+        android:id="@+id/condition_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/condition_spinner"
-        android:layout_below="@+id/condition_label"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/condition_label" />
 
     <Button
         android:text="@string/submit"
@@ -116,6 +116,15 @@
         android:onClick="cancelReportButtonPressed"
         android:layout_below="@+id/submit_report"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/sourceReportSwitchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/cancel_report"
+        android:onClick="switchToPurityReportButtonPressed"
+        android:text="@string/switch_report_to_purity" />
 
 
 </RelativeLayout>

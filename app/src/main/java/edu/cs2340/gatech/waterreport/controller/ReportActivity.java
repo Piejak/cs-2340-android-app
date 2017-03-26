@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.User;
 import edu.cs2340.gatech.waterreport.model.WaterCondition;
+import edu.cs2340.gatech.waterreport.model.WaterOverallCondition;
+import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 import edu.cs2340.gatech.waterreport.model.WaterType;
 
@@ -37,6 +39,9 @@ public class ReportActivity extends GenericActivity {
     private Spinner waterConditionSpinner;
     private LatLng location;
     private int reportNumber;
+    private Spinner waterPurityConditionSpinner;
+    private int virusPPM;
+    private int contaminantPPM;
 
 
     @Override
@@ -103,7 +108,6 @@ public class ReportActivity extends GenericActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
         WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
-        System.out.println("after snapshot is " + reportNumber);
         EditText latitudeEntry = (EditText) findViewById(R.id.latitude_entry);
         EditText longitudeEntry = (EditText) findViewById(R.id.longitude_entry);
         double latitude = Double.parseDouble(latitudeEntry.getText().toString());
@@ -118,6 +122,58 @@ public class ReportActivity extends GenericActivity {
             User localUser = new User(user.getEmail(), user.getUid(), null);
             WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
             mDatabase.child("sourceReports").push().setValue(report);
+            mDatabase.child("reportNumber").setValue(reportNumber);
+            switchActivity(LandingActivity.class);
+        }
+    }
+
+    /**
+     * Switching to purity report instead of source and creating views
+     * @param v switch to purity report button
+     */
+    public void switchToPurityReportButtonPressed(View v) {
+        setContentView(R.layout.activity_purity_report);
+        waterConditionSpinner = (Spinner) findViewById(R.id.purity_condition_spinner);
+
+        waterConditionSpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, WaterOverallCondition.values()));
+    }
+
+    /**
+     * Switching back to source report layout
+     * @param v switch to source report button
+     */
+    public void switchToSourceReportButtonPressed(View v) {
+        setContentView(R.layout.activity_report);
+        waterConditionSpinner = (Spinner) findViewById(R.id.condition_spinner);
+
+        waterConditionSpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, WaterCondition.values()));
+    }
+
+    /**
+     * Submits the purity report to the server
+     * @param v the submission button
+     */
+    public void submitPurityReportButtonPressed(View v) {
+        //TODO confirm everything works
+        //submitting the report pushes it to firebase now
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        WaterOverallCondition waterOverallCondition = (WaterOverallCondition) waterPurityConditionSpinner.getSelectedItem();
+        EditText latitudeEntry = (EditText) findViewById(R.id.purity_latitude_entry);
+        EditText longitudeEntry = (EditText) findViewById(R.id.purity_longitude_entry);
+        double latitude = Double.parseDouble(latitudeEntry.getText().toString());
+        double longitude = Double.parseDouble(longitudeEntry.getText().toString());
+        if (latitudeEntry.getText().toString().equals("")) {
+            // show a snackbar saying that the latitude is required
+        } else if (longitudeEntry.getText().toString().equals("")) {
+            // show a snackbar saying that the longitude is required
+        } else {
+            Location location = new Location(latitude, longitude);
+            reportNumber++;
+            User localUser = new User(user.getEmail(), user.getUid(), null);
+            WaterPurityReport report = new WaterPurityReport(localUser, waterOverallCondition, reportNumber, location, virusPPM, contaminantPPM);
+            mDatabase.child("purityReports").push().setValue(report);
             mDatabase.child("reportNumber").setValue(reportNumber);
             switchActivity(LandingActivity.class);
         }

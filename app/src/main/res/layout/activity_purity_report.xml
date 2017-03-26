@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/location_layout"-->
+    <!--android:layout_below="@id/location_label"-->
+    <!--&gt;-->
+
+    <!--<ImageButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:srcCompat="@drawable/ic_location"-->
+    <!--android:id="@+id/current_location"-->
+    <!--android:onClick="currentLocationButtonPressed"-->
+    <!--android:contentDescription="@string/current_location"-->
+    <!--android:layout_weight="1"-->
+    <!--/>-->
+
+    <!--<ImageButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:srcCompat="@drawable/ic_map_icon"-->
+    <!--android:onClick="pickLocationButtonPressed"-->
+    <!--android:contentDescription="@string/pick_location_on_map"-->
+    <!--android:id="@+id/pick_location"-->
+    <!--android:layout_weight="1"-->
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/latitude_longitude_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/location_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/location"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+        <EditText
+            android:id="@+id/purity_latitude_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Latitude"
+            android:inputType="numberDecimal|numberSigned" />
+
+        <EditText
+            android:id="@+id/purity_longitude_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Longitude"
+            android:inputType="numberDecimal|numberSigned" />
+
+        <TextView
+            android:id="@+id/PPM_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ppm"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+        <EditText
+            android:id="@+id/virus_PPM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Virus PPM"
+            android:inputType="numberDecimal|numberSigned" />
+
+        <EditText
+            android:id="@+id/contaminant_PPM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Contaminant PPM"
+            android:inputType="numberDecimal|numberSigned" />
+
+    </LinearLayout>
+
+    <TextView
+        android:text="@string/condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/condition_label"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_below="@+id/latitude_longitude_entry"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/purity_condition_spinner"
+        android:layout_below="@+id/condition_label"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/submit_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/purity_condition_spinner"
+        android:onClick="submitPurityReportButtonPressed"
+        android:text="@string/submit" />
+
+    <Button
+        android:text="@string/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancel_report"
+        android:onClick="cancelReportButtonPressed"
+        android:layout_below="@+id/submit_report"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/switch_to_source_report_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/cancel_report"
+        android:onClick="switchToSourceReportButtonPressed"
+        android:text="@string/switch_report_to_source" />
+
+
+</RelativeLayout>

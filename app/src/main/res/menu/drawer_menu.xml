@@ -18,5 +18,9 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_leave"
             android:title="@string/logout" />
+        <item
+            android:id="@+id/nav_purity_report_list"
+            android:icon="@drawable/ic_leave"
+            android:title="@string/purity_list" />
     </group>
 </menu>

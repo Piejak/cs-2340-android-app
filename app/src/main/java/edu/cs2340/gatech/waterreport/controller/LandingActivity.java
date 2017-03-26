@@ -159,6 +159,10 @@ public class LandingActivity extends GenericActivity {
             // go to map of reports
             title = "Map";
             fragmentClass = MapFragment.class;
+        } else if (id == R.id.nav_purity_report_list) {
+            // go to list of purity reports
+            title = "Purity Reports";
+            fragmentClass = PurityReportListFragment.class;
         }
 
         //replace the frame layout with the content we want to show
