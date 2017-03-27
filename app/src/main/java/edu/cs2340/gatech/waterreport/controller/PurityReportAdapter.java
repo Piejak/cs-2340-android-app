@@ -62,8 +62,8 @@ public class PurityReportAdapter extends RecyclerView.Adapter<PurityReportAdapte
 
 //        holder.mOverallConditionText.setText(mDataset.get(position).getWaterOverallCondition().toString());
         holder.mDateText.setText(mDataset.get(position).getDate().toString());
-        holder.mVirusPPMText.setText(mDataset.get(position).getVirusPPM() + "");
-        holder.mContaminantPPMText.setText(mDataset.get(position).getContaminantPPM() + "");
+        holder.mVirusPPMText.setText("Virus PPM: " + mDataset.get(position).getVirusPPM() + "");
+        holder.mContaminantPPMText.setText("Contaminant PPM: " + mDataset.get(position).getContaminantPPM() + "");
     }
 
 

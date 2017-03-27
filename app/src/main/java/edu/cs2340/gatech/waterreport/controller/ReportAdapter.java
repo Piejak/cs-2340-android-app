@@ -71,8 +71,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         // - replace the contents of the view with that element
         holder.mUserText.setText(mDataset.get(position).getReporter().toString());
         holder.mDateText.setText(mDataset.get(position).getDate().toString());
-        holder.mConditionText.setText(mDataset.get(position).getWaterCondition().toString());
-        holder.mTypeText.setText(mDataset.get(position).getWaterType().toString());
+        holder.mConditionText.setText("Water Condition: " + mDataset.get(position).getWaterCondition().toString());
+        holder.mTypeText.setText("Water Type: " + mDataset.get(position).getWaterType().toString());
     }
 
 
