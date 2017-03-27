@@ -117,14 +117,5 @@
         android:layout_below="@+id/submit_report"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:id="@+id/sourceReportSwitchButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/cancel_report"
-        android:onClick="switchToPurityReportButtonPressed"
-        android:text="@string/switch_report_to_purity" />
-
 
 </RelativeLayout>

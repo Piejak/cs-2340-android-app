@@ -83,6 +83,7 @@ public class PurityActivity extends GenericActivity {
 
     }
 
+    /*
     public void currentLocationButtonPressed(View v) {
         // pause and save state then switch state to map and grab a latitude/longitude from map
         // TODO
@@ -94,6 +95,7 @@ public class PurityActivity extends GenericActivity {
         //TODO
         switchActivity(LandingActivity.class);
     }
+    */
 
 
     /**
