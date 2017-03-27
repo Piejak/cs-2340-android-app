@@ -39,7 +39,7 @@
     <string name="ppm">PPM</string>
     <string name="switch_report_to_purity">Switch to purity report</string>
     <string name="switch_report_to_source">Switch to source report</string>
-    <string name="purity_list">List of Purity Reports</string>
+    <string name="purity_list">Purity Reports</string>
 
 
 </resources>

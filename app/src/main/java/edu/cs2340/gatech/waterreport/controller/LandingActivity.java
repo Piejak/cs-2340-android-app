@@ -1,5 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -9,12 +10,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import edu.cs2340.gatech.waterreport.model.AccountType;
 
 /**
  * A landing screen that user can logout or view the profile
@@ -25,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class LandingActivity extends GenericActivity {
     private ActionBarDrawerToggle mDrawerToggle;
+    private AccountType accountType;
 
 
     @Override
@@ -75,7 +85,7 @@ public class LandingActivity extends GenericActivity {
         }
 
         // set up the drawer with the click listener that we have a method for
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -87,6 +97,32 @@ public class LandingActivity extends GenericActivity {
         // set the first item (reports) as being selected
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        DatabaseReference userQuery = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    if (userSnapshot.getKey().toLowerCase().equals("accounttype")) {
+                        accountType = userSnapshot.getValue(AccountType.class);
+                    }
+//                    accountType = userSnapshot.getValue(AccountType.class);
+//                    Log.e("USER INFO", userInformation.toString());
+
+                }
+                if (accountType != AccountType.DEFAULT
+                        && accountType != AccountType.USER) {
+                    //navigationView.getMenu().getItem(R.id.nav_purity_report_list).setVisible(true);
+                    navigationView.inflateMenu(R.menu.purity_drawer_menu);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("Cancel", "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        });
         // change the default header text to the user's email
         View headerView = navigationView.getHeaderView(0);
         TextView headerText = (TextView) headerView.findViewById(R.id.header_text);

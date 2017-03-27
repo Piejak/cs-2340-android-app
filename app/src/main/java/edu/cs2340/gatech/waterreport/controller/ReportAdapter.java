@@ -1,6 +1,7 @@
 package edu.cs2340.gatech.waterreport.controller;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,12 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
  */
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private ArrayList<WaterSourceReport> mDataset;
+    private static ClickListener clickListener;
 
     /**
      * Inner view holder class that assigns view elements for each card in the recycler view
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mUserText;
         public TextView mDateText;
         public TextView mConditionText;
@@ -31,10 +33,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public ViewHolder(View v) {
             super(v);
 
+            v.setOnClickListener(this);
             mUserText = (TextView) v.findViewById(R.id.user_text);
             mDateText = (TextView) v.findViewById(R.id.date_text);
             mConditionText = (TextView) v.findViewById(R.id.water_condition_text);
             mTypeText = (TextView) v.findViewById(R.id.water_type_text);
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(), v);
         }
     }
 
@@ -45,6 +53,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
      */
     public ReportAdapter(ArrayList<WaterSourceReport> waterSourceReports) {
         mDataset = waterSourceReports;
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        ReportAdapter.clickListener = clickListener;
     }
 
     @Override
@@ -67,5 +79,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
     }
 }

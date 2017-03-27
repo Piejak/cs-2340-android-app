@@ -16,8 +16,8 @@ public class WaterPurityReport {
 
     private User worker;
     private Location location;
-    private int virusPPM;
-    private int contaminantPPM;
+    private double virusPPM;
+    private double contaminantPPM;
 
     /**
      * No arg constructor needed for Firebase
@@ -36,7 +36,7 @@ public class WaterPurityReport {
      * @param virusPPM the amount of virus contaminant in the water in parts per million
      * @param contaminantPPM the amount of contaminant in the water in parts per million
      */
-    public WaterPurityReport(User user, WaterOverallCondition overallCondition, int number, Location location, int virusPPM, int contaminantPPM) {
+    public WaterPurityReport(User user, WaterOverallCondition overallCondition, int number, Location location, double virusPPM, double contaminantPPM) {
         this.date = new Date();
         this.worker = user;
         this.overallCondition =  overallCondition;
@@ -68,5 +68,14 @@ public class WaterPurityReport {
      */
     public WaterOverallCondition getWaterOverallCondition() {
         return overallCondition;
+    }
+    public double getVirusPPM() {
+        return virusPPM;
+    }
+    public double getContaminantPPM() {
+        return contaminantPPM;
+    }
+    public Location getLocation() {
+        return location;
     }
 }

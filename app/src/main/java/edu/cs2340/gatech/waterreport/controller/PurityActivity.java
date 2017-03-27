@@ -1,5 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +29,7 @@ import edu.cs2340.gatech.waterreport.model.WaterType;
 /**
  * Controller class for reports
  */
-public class ReportActivity extends GenericActivity {
+public class PurityActivity extends GenericActivity {
 
     //private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -36,30 +37,34 @@ public class ReportActivity extends GenericActivity {
     private DatabaseReference mDatabase;
 
     private Spinner waterTypeSpinner;
-    private Spinner waterConditionSpinner;
+    private Spinner waterOverallConditionSpinner;
     private LatLng location;
     private int reportNumber;
-    private Spinner waterPurityConditionSpinner;
-    private int virusPPM;
-    private int contaminantPPM;
+    private double virusPPM;
+    private double contaminantPPM;
+    private double latitude;
+    private double longitude;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report);
+        setContentView(R.layout.activity_purity_report);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            latitude = extras.getDouble("REPORT_LAT");
+            longitude = extras.getDouble("REPORT_LONG");
+        }
+
+
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        waterTypeSpinner = (Spinner) findViewById(R.id.type_spinner);
-        waterConditionSpinner = (Spinner) findViewById(R.id.condition_spinner);
+        waterOverallConditionSpinner = (Spinner) findViewById(R.id.purity_condition_spinner);
 
-        waterTypeSpinner.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, WaterType.values()));
-
-        waterConditionSpinner.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, WaterCondition.values()));
+        waterOverallConditionSpinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, WaterOverallCondition.values()));
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -99,31 +104,26 @@ public class ReportActivity extends GenericActivity {
         switchActivity(LandingActivity.class);
     }
 
+
     /**
-     * called when user click the submit report Button.
-     * @param v represents the button for cancel changing the profile
+     * Submits the purity report to the server
+     * @param v the submission button
      */
-    public void submitReportButtonPressed(View v) {
+    public void submitPurityReportButtonPressed(View v) {
+        //TODO confirm everything works
         //submitting the report pushes it to firebase now
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
-        WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
-        EditText latitudeEntry = (EditText) findViewById(R.id.latitude_entry);
-        EditText longitudeEntry = (EditText) findViewById(R.id.longitude_entry);
-        double latitude = Double.parseDouble(latitudeEntry.getText().toString());
-        double longitude = Double.parseDouble(longitudeEntry.getText().toString());
-        if (latitudeEntry.getText().toString().equals("")) {
-            // show a snackbar saying that the latitude is required
-        } else if (longitudeEntry.getText().toString().equals("")) {
-            // show a snackbar saying that the longitude is required
-        } else {
-            Location location = new Location(latitude, longitude);
-            reportNumber++;
-            User localUser = new User(user.getEmail(), user.getUid(), null);
-            WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
-            mDatabase.child("sourceReports").push().setValue(report);
-            mDatabase.child("reportNumber").setValue(reportNumber);
-            switchActivity(LandingActivity.class);
-        }
+        WaterOverallCondition waterOverallCondition = (WaterOverallCondition) waterOverallConditionSpinner.getSelectedItem();
+
+        Location location = new Location(latitude, longitude);
+        reportNumber++;
+        User localUser = new User(user.getEmail(), user.getUid(), null);
+        virusPPM = Double.parseDouble(((EditText) findViewById(R.id.virus_PPM)).getText().toString());
+        contaminantPPM = Double.parseDouble(((EditText) findViewById(R.id.contaminant_PPM)).getText().toString());
+
+        WaterPurityReport report = new WaterPurityReport(localUser, waterOverallCondition, reportNumber, location, virusPPM, contaminantPPM);
+        mDatabase.child("purityReports").push().setValue(report);
+        mDatabase.child("reportNumber").setValue(reportNumber);
+        switchActivity(LandingActivity.class);
     }
 }
