@@ -102,7 +102,7 @@ public class LandingActivity extends GenericActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    if (userSnapshot.getKey().toLowerCase().equals("accounttype")) {
+                    if (userSnapshot.getKey().equals("accountType")) {
                         accountType = userSnapshot.getValue(AccountType.class);
                     }
 //                    accountType = userSnapshot.getValue(AccountType.class);

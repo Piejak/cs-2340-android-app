@@ -55,7 +55,7 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
                     Log.e("INFO", userSnapshot.toString());
-                    if (userSnapshot.getKey().toLowerCase().equals("accounttype")) {
+                    if (userSnapshot.getKey().equals("accountType")) {
                         accountType = userSnapshot.getValue(AccountType.class);
                     }
 //                    accountType = userSnapshot.getValue(AccountType.class);
