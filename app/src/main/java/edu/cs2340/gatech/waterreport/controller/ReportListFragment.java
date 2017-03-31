@@ -3,9 +3,12 @@ package edu.cs2340.gatech.waterreport.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -73,9 +76,46 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
                     });
                     mAdapter.setOnItemLongClickListener(new ReportAdapter.LongClickListener() {
                         @Override
-                        public void onItemLongClick(int position, View v) {
+                        public void onItemLongClick(final int position, View v) {
                             //Toast.makeText(getContext(), "Long click registered", Toast.LENGTH_LONG).show();
                             //TODO bring up menu with create source report, create purity report, go to historical graph
+                            PopupMenu popupMenu = new PopupMenu(getContext(), v);
+
+                            popupMenu.inflate(R.menu.report_list_popup_menu);
+                            Menu menu = popupMenu.getMenu();
+
+                            // Hiding menu options depending on user type
+                            if (accountType != AccountType.MANAGER) {
+                                if (accountType != AccountType.WORKER) {
+                                    menu.findItem(R.id.nav_purity_report).setVisible(false);
+                                }
+                                menu.findItem(R.id.nav_historical_graph).setVisible(false);
+                            }
+
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    if (item.getItemId() == R.id.nav_source_report) {
+                                        Intent intent = new Intent(getActivity(), ReportActivity.class);
+                                        intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                                        intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                                        startActivity(intent);
+                                    } else if (item.getItemId() == R.id.nav_purity_report) {
+                                        Intent intent = new Intent(getActivity(), PurityActivity.class);
+                                        intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                                        intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                                        startActivity(intent);
+                                    } else {
+                                        Intent intent = new Intent(getActivity(), HistoricalGraphActivity.class);
+                                        intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                                        intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                                        startActivity(intent);
+                                    }
+                                    return true;
+                                }
+                            });
+
+                            popupMenu.show();
                         }
                     });
                 }
