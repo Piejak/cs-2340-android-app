@@ -1,5 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,20 +21,26 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private ArrayList<WaterSourceReport> mDataset;
     private static ClickListener clickListener;
+    private static LongClickListener longClickListener;
 
     /**
      * Inner view holder class that assigns view elements for each card in the recycler view
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
+
+    {
         public TextView mUserText;
         public TextView mDateText;
         public TextView mConditionText;
         public TextView mTypeText;
+        public View v;
 
         public ViewHolder(View v) {
             super(v);
+            this.v = v;
 
             v.setOnClickListener(this);
+            v.setOnLongClickListener(this);
             mUserText = (TextView) v.findViewById(R.id.user_text);
             mDateText = (TextView) v.findViewById(R.id.date_text);
             mConditionText = (TextView) v.findViewById(R.id.water_condition_text);
@@ -44,6 +51,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public void onClick(View v) {
             clickListener.onItemClick(getAdapterPosition(), v);
         }
+
+        @Override
+        public boolean onLongClick(View v) {
+            longClickListener.onItemLongClick(getAdapterPosition(), v);
+            return true;
+        }
+
     }
 
     /**
@@ -59,6 +73,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         ReportAdapter.clickListener = clickListener;
     }
 
+    public void setOnItemLongClickListener(LongClickListener longClickListener) {
+        ReportAdapter.longClickListener = longClickListener;
+    }
+
     @Override
     public ReportAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.report_card_view,
@@ -66,7 +84,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mUserText.setText(mDataset.get(position).getReporter().toString());
@@ -83,5 +101,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     public interface ClickListener {
         void onItemClick(int position, View v);
+    }
+
+    public interface  LongClickListener {
+        void onItemLongClick(int position, View v);
     }
 }

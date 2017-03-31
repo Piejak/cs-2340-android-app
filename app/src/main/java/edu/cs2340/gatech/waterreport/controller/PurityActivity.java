@@ -112,7 +112,6 @@ public class PurityActivity extends GenericActivity {
      * @param v the submission button
      */
     public void submitPurityReportButtonPressed(View v) {
-        //TODO confirm everything works
         //submitting the report pushes it to firebase now
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         WaterOverallCondition waterOverallCondition = (WaterOverallCondition) waterOverallConditionSpinner.getSelectedItem();

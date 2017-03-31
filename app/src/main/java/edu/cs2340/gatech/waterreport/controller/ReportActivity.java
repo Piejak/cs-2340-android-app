@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,15 +40,23 @@ public class ReportActivity extends GenericActivity {
     private Spinner waterConditionSpinner;
     private LatLng location;
     private int reportNumber;
-    private Spinner waterPurityConditionSpinner;
-    private int virusPPM;
-    private int contaminantPPM;
+    private EditText latitudeEntry;
+    private EditText longitudeEntry;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+
+        // grabbing location from previous source report if possible
+        latitudeEntry = (EditText) findViewById(R.id.latitude_entry);
+        longitudeEntry = (EditText) findViewById(R.id.longitude_entry);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            latitudeEntry.setText(String.valueOf(extras.getDouble("REPORT_LAT")), TextView.BufferType.EDITABLE);
+            longitudeEntry.setText(String.valueOf(extras.getDouble("REPORT_LONG")), TextView.BufferType.EDITABLE);
+        }
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -108,8 +117,6 @@ public class ReportActivity extends GenericActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
         WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
-        EditText latitudeEntry = (EditText) findViewById(R.id.latitude_entry);
-        EditText longitudeEntry = (EditText) findViewById(R.id.longitude_entry);
         double latitude = Double.parseDouble(latitudeEntry.getText().toString());
         double longitude = Double.parseDouble(longitudeEntry.getText().toString());
         if (latitudeEntry.getText().toString().equals("")) {

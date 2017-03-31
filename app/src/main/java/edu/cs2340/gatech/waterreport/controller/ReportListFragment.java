@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -64,13 +65,17 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
                     mAdapter.setOnItemClickListener(new ReportAdapter.ClickListener() {
                         @Override
                         public void onItemClick(int position, View v) {
-                            if (accountType != AccountType.DEFAULT
-                                    && accountType != AccountType.USER) {
-                                Intent intent = new Intent(getActivity(), PurityActivity.class);
-                                intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
-                                intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
-                                startActivity(intent);
-                            }
+                            Intent intent = new Intent(getActivity(), ReportActivity.class);
+                            intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                            intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                            startActivity(intent);
+                        }
+                    });
+                    mAdapter.setOnItemLongClickListener(new ReportAdapter.LongClickListener() {
+                        @Override
+                        public void onItemLongClick(int position, View v) {
+                            //Toast.makeText(getContext(), "Long click registered", Toast.LENGTH_LONG).show();
+                            //TODO bring up menu with create source report, create purity report, go to historical graph
                         }
                     });
                 }
