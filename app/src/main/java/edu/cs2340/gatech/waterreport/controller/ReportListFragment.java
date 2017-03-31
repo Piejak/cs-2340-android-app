@@ -77,8 +77,6 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
                     mAdapter.setOnItemLongClickListener(new ReportAdapter.LongClickListener() {
                         @Override
                         public void onItemLongClick(final int position, View v) {
-                            //Toast.makeText(getContext(), "Long click registered", Toast.LENGTH_LONG).show();
-                            //TODO bring up menu with create source report, create purity report, go to historical graph
                             PopupMenu popupMenu = new PopupMenu(getContext(), v);
 
                             popupMenu.inflate(R.menu.report_list_popup_menu);
