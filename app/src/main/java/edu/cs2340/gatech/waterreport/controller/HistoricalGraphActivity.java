@@ -63,10 +63,14 @@ public class HistoricalGraphActivity extends GenericActivity {
                 Log.e("Count of children" , "" + dataSnapshot.getChildrenCount());
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     WaterPurityReport report = postSnapshot.getValue(WaterPurityReport.class);
+                    Log.e("PurityReportDateString", report.getDate().toString());
+                    Log.e("PurityReportServerPull", String.valueOf(report.getDate().getMonth()));
                     purityReports.add(report);
                 }
                 populatePurityReports();
                 createNewGraph(currentReports);
+                chart.getLegend().setEnabled(false);
+                chart.getXAxis().setGranularity(1f);
             }
 
             @Override
@@ -75,8 +79,7 @@ public class HistoricalGraphActivity extends GenericActivity {
             }
         });
 
-        chart.getLegend().setEnabled(false);
-        chart.getXAxis().setGranularity(1f);
+
     }
 
     /**
@@ -88,6 +91,7 @@ public class HistoricalGraphActivity extends GenericActivity {
             if (report.locationMatch(currentLocation)) {
                 System.out.println("Location Match");
                 if (currentYear == (report.getDate().getYear() + 1900)) {
+                    Log.e("PurityReport", String.valueOf(report.getDate().getMonth()));
                     currentReports.add(report);
                 }
             }
@@ -104,6 +108,7 @@ public class HistoricalGraphActivity extends GenericActivity {
         if (!entries.isEmpty()) {
             List<Entry> chartEntries = new ArrayList<>();
             Map<Integer, List<Integer>> averages = new HashMap<>();
+            // Set up sum and number of reports
             for (int i = 0; i < 12; i++) {
                 List<Integer> sumAndCount = new ArrayList<>();
                 // Average for month
@@ -113,6 +118,7 @@ public class HistoricalGraphActivity extends GenericActivity {
                 averages.put(i, sumAndCount);
             }
 
+            // Update average
             for (WaterPurityReport report : entries) {
                 List<Integer> current = averages.get(report.getDate().getMonth());
                 Integer count = current.get(1);
@@ -195,7 +201,7 @@ public class HistoricalGraphActivity extends GenericActivity {
         currentLocation = new Location(latitude, longitude);
         populatePurityReports();
         createNewGraph(currentReports);
-        System.out.println("Change Location");
+        //System.out.println("Change Location");
     }
 
     /**
