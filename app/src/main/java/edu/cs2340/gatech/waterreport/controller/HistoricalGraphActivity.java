@@ -117,12 +117,15 @@ public class HistoricalGraphActivity extends GenericActivity {
             for (int i = 0; i < 12; i++) {
                 if (averages.get(i).get(1) != 0) {
                     chartEntries.add(new Entry(i, averages.get(i).get(0) / averages.get(i).get(1)));
+                    chartEntries.add(new Entry(3, 445f));
                 }
-            }
-            LineDataSet lineDataSet = new LineDataSet(chartEntries, "Placeholder");
+                LineDataSet lineDataSet = new LineDataSet(chartEntries, "Placeholder");
 
-            chart.setData(new LineData(lineDataSet));
-            chart.invalidate();
+                chart.setData(new LineData(lineDataSet));
+                chart.getXAxis().setAxisMinimum(1f);
+                chart.getXAxis().setAxisMaximum(12f);
+                chart.invalidate();
+            }
         }
     }
 
