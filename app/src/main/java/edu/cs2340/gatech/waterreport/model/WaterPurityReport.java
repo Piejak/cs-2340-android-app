@@ -2,7 +2,9 @@ package edu.cs2340.gatech.waterreport.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Class representing a water purity report
@@ -77,5 +79,9 @@ public class WaterPurityReport {
     }
     public Location getLocation() {
         return location;
+    }
+
+    public boolean locationMatch(Location other) {
+        return location.equals(other);
     }
 }

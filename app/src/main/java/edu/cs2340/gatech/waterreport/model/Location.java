@@ -39,4 +39,11 @@ public class Location {
     public double getLongitude() {
         return longitude;
     }
+
+    public boolean equals(Location other) {
+        if (latitude == other.getLatitude() && longitude == other.getLongitude()) {
+            return true;
+        }
+        return false;
+    }
 }
