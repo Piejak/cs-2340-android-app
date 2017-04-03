@@ -79,6 +79,9 @@ public class HistoricalGraphActivity extends GenericActivity {
         chart.getXAxis().setGranularity(1f);
     }
 
+    /**
+     * Populate the list where matching lists are stored
+     */
     private void populatePurityReports() {
         currentReports = new ArrayList<>();
         for (WaterPurityReport report : purityReports) {
@@ -91,6 +94,10 @@ public class HistoricalGraphActivity extends GenericActivity {
         }
     }
 
+    /**
+     * Creates a new graph and updates chart
+     * @param entries to be written into chart
+     */
     private void createNewGraph(List<WaterPurityReport> entries) {
         TextView currentYearView = (TextView) findViewById(R.id.current_year_view);
         currentYearView.setText(String.valueOf(currentYear));
@@ -117,7 +124,7 @@ public class HistoricalGraphActivity extends GenericActivity {
             for (int i = 0; i < 12; i++) {
                 if (averages.get(i).get(1) != 0) {
                     chartEntries.add(new Entry(i, averages.get(i).get(0) / averages.get(i).get(1)));
-                    chartEntries.add(new Entry(3, 445f));
+                    //chartEntries.add(new Entry(3, 445f));
                 }
                 LineDataSet lineDataSet = new LineDataSet(chartEntries, "Placeholder");
 
@@ -129,10 +136,18 @@ public class HistoricalGraphActivity extends GenericActivity {
         }
     }
 
+    /**
+     * Switches to virus PPM
+     * @param v the virus ppm button
+     */
     public void changeToVirusButtonPressed(View v) {
         createNewGraph(currentReports);
     }
 
+    /**
+     * Switches to contaminant PPM and updates chart
+     * @param v contaminant PPM button
+     */
     public void changeToContaminantButtonPressed(View v) {
         TextView currentYearView = (TextView) findViewById(R.id.current_year_view);
         currentYearView.setText(String.valueOf(currentYear));
@@ -168,6 +183,10 @@ public class HistoricalGraphActivity extends GenericActivity {
         }
     }
 
+    /**
+     * Takes in the location inputted by user and updates the chart with it
+     * @param v the change location button
+     */
     public void changeLocationButtonPressed(View v) {
         EditText graph_latitude = (EditText) findViewById(R.id.graph_latitude);
         EditText graph_longitude = (EditText) findViewById(R.id.graph_longitude);
@@ -179,6 +198,10 @@ public class HistoricalGraphActivity extends GenericActivity {
         System.out.println("Change Location");
     }
 
+    /**
+     * Changes chart to the previous year
+     * @param v the previous year button
+     */
     public void previousYearButtonPressed(View v) {
         currentYear--;
         chart.clear();
@@ -186,6 +209,10 @@ public class HistoricalGraphActivity extends GenericActivity {
         createNewGraph(currentReports);
     }
 
+    /**
+     * Changes chart to the next year
+     * @param v the next year button
+     */
     public void nextYearButtonPressed(View v) {
         currentYear++;
         chart.clear();
