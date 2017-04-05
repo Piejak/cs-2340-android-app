@@ -2,9 +2,11 @@ package edu.cs2340.gatech.waterreport.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Class representing a water purity report
@@ -62,6 +64,25 @@ public class WaterPurityReport {
      */
     public User getReporter() {
         return worker;
+    }
+
+    /**
+     * Iterates through a List of purity reports and returns a list of the reports that have
+     * locations that match the current one
+     * @param list of purity reports to match
+     * @return the list of purity report that match the current report's location
+     */
+    public List<WaterPurityReport> matchingLocations(List<WaterPurityReport> list) {
+        if (list == null) {
+            throw new IllegalArgumentException("List passed in is null");
+        }
+        List<WaterPurityReport> matchingReports = new ArrayList<>();
+        for (WaterPurityReport report : list) {
+            if (locationMatch(report.getLocation())) {
+                matchingReports.add(report);
+            }
+        }
+        return matchingReports;
     }
 
     /**
