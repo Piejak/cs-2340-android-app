@@ -11,7 +11,6 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,14 +19,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
-import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 
 /**
@@ -60,11 +57,11 @@ public class HistoricalGraphActivity extends GenericActivity {
         reportsDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("Count of children" , "" + dataSnapshot.getChildrenCount());
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    WaterPurityReport report = postSnapshot.getValue(WaterPurityReport.class);
-                    Log.e("PurityReportDateString", report.getDate().toString());
-                    Log.e("PurityReportServerPull", String.valueOf(report.getDate().getMonth()));
+                //Log.e("Count of children" , "" + dataSnapshot.getChildrenCount());
+                for (DataSnapshot reportSnapshot: dataSnapshot.getChildren()) {
+                    WaterPurityReport report = reportSnapshot.getValue(WaterPurityReport.class);
+                    //Log.e("PurityReportDateString", report.getDate().toString());
+                    //Log.e("PurityReportServerPull", String.valueOf(report.getDate().getMonth()));
                     purityReports.add(report);
                 }
                 populatePurityReports();
@@ -89,9 +86,9 @@ public class HistoricalGraphActivity extends GenericActivity {
         currentReports = new ArrayList<>();
         for (WaterPurityReport report : purityReports) {
             if (report.locationMatch(currentLocation)) {
-                System.out.println("Location Match");
+                //System.out.println("Location Match");
                 if (currentYear == (report.getDate().getYear() + 1900)) {
-                    Log.e("PurityReport", String.valueOf(report.getDate().getMonth()));
+                    //Log.e("PurityReport", String.valueOf(report.getDate().getMonth()));
                     currentReports.add(report);
                 }
             }
@@ -129,7 +126,7 @@ public class HistoricalGraphActivity extends GenericActivity {
 
             for (int i = 0; i < 12; i++) {
                 if (averages.get(i).get(1) != 0) {
-                    chartEntries.add(new Entry(i, averages.get(i).get(0) / averages.get(i).get(1)));
+                    chartEntries.add(new Entry(i + 1, averages.get(i).get(0) / averages.get(i).get(1)));
                     //chartEntries.add(new Entry(3, 445f));
                 }
                 LineDataSet lineDataSet = new LineDataSet(chartEntries, "Placeholder");
@@ -179,7 +176,7 @@ public class HistoricalGraphActivity extends GenericActivity {
 
             for (int i = 0; i < 12; i++) {
                 if (averages.get(i).get(1) != 0) {
-                    chartEntries.add(new Entry(i, averages.get(i).get(0) / averages.get(i).get(1)));
+                    chartEntries.add(new Entry(i + 1, averages.get(i).get(0) / averages.get(i).get(1)));
                 }
             }
             LineDataSet lineDataSet = new LineDataSet(chartEntries, "Placeholder");
