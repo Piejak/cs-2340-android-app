@@ -176,12 +176,17 @@ public class M10Tests {
 
     /**
      * Test passing a null argument to Location.validateLocation()
+     * @author Brian Piejak
      */
     @Test(expected = IllegalArgumentException.class)
     public void testNullLocation() {
         Location.validateLocation(null);
     }
 
+    /**
+     * Test Location.validateLocation()
+     * @author Brian Piejak
+     */
     @Test
     public void testValidateLocation() {
         assertEquals("Latitude greater than max lat", "Latitude must be less than 90", Location.validateLocation(new Location(91, 0)));
