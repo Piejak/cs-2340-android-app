@@ -2,6 +2,7 @@ package edu.cs2340.gatech.waterreport;
 
 import org.junit.Test;
 
+import edu.cs2340.gatech.waterreport.model.AccountType;
 import edu.cs2340.gatech.waterreport.model.Location;
 
 import static org.junit.Assert.*;
@@ -202,6 +203,40 @@ public class M10Tests {
         assertEquals("Latitude is min double", "Latitude must be greater than -90", Location.validateLocation(new Location(-Double.MAX_VALUE, 0)));
 
     }
+
+
+    /**
+     * Test update the user information
+     * @author  Hui Li
+     */
+    @Test
+    public void testUpdadeUserInfo() {
+        User testuser = new User("12345@qq.com", "2" , new UserInformation());
+        UserInformation testinfo = testuser.userInformation;
+        testinfo.updateAllFields("Hui Li", "Atlanta", "GT", AccountType.ADMINISTRATOR);
+        assertEquals(AccountType.ADMINISTRATOR, testinfo.getAccountType());
+        assertEquals("Hui Li", testinfo.getRealName());
+        assertEquals("Atlanta", testinfo.getAddress());
+        assertEquals("GT", testinfo.getAffiliation());
+    }
+
+    /**
+     * Test update the user information to null
+     * @author  Hui Li
+     */
+    @Test
+    public void testUpdadeUserInfonull() {
+        User testuser = new User("12345@qq.com", "2" , new UserInformation());
+        UserInformation testinfo = testuser.userInformation;
+        testinfo.updateAllFields("Hui Li", "Atlanta", "GT", AccountType.ADMINISTRATOR);
+        testinfo.updateAllFields(null,null,null,AccountType.DEFAULT);
+        assertEquals(AccountType.DEFAULT, testinfo.getAccountType());
+        assertEquals(null, testinfo.getRealName());
+        assertEquals(null, testinfo.getAddress());
+        assertEquals(null, testinfo.getAffiliation());
+    }
+
+
 
 
 }
