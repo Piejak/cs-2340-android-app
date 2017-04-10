@@ -1,5 +1,7 @@
 package edu.cs2340.gatech.waterreport;
 
+import android.app.admin.SecurityLog;
+
 import edu.cs2340.gatech.waterreport.model.AccountType;
 
 import static org.junit.Assert.*;
@@ -15,8 +17,10 @@ import java.util.Random;
 import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.User;
 import edu.cs2340.gatech.waterreport.model.UserInformation;
+import edu.cs2340.gatech.waterreport.model.WaterCondition;
 import edu.cs2340.gatech.waterreport.model.WaterOverallCondition;
 import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
+import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 
 /**
@@ -231,5 +235,28 @@ public class M10Tests {
         assertEquals(null, testInfo.getRealName());
         assertEquals(null, testInfo.getAddress());
         assertEquals(null, testInfo.getAffiliation());
+    }
+
+    /**
+     * Test WaterCondition
+     *  by Jimmy Dinh-Nguyen
+     */
+    public void testWaterCondition() {
+        WaterCondition w = new WaterCondition("Waste");
+        WaterCondition w = new WaterCondition("Treatable-Clear");
+        WaterCondition w = new WaterCondition("Treatable-Muddy");
+        WaterCondition w = new WaterCondition("Potable");
+    }
+
+    /**
+     * Test AccountType
+     * by Jimmy Dinh-Nguyen
+     */
+    public void testAccountType() {
+        AccountType aT1 = new AccountType("User");
+        AccountType aT2 = new AccountType("Worker");
+        AccountType aT3 = new AccountType("Manager");
+        AccountType aT4 = new AccountType("Administrator");
+
     }
 }
