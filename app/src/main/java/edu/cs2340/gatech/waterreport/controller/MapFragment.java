@@ -33,10 +33,9 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
  */
 
 public class MapFragment extends android.support.v4.app.Fragment implements OnMapReadyCallback {
-    private GoogleMap mMap;
-    private ArrayList<WaterSourceReport> waterSourceReports = new ArrayList<>();
+    private final ArrayList<WaterSourceReport> waterSourceReports = new ArrayList<>();
     private SupportMapFragment mapFragment;
-    private OnMapReadyCallback asyncThisReference = this;
+    private final OnMapReadyCallback asyncThisReference = this;
 
 
     /**
@@ -116,16 +115,15 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
         // Setting a click event handler for the map
         for (WaterSourceReport r : waterSourceReports) {
             Location location = r.getLocation();
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(loc).title(r.getReporter().toString()).snippet(r.getWaterType() + " " + r.getWaterCondition()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+            googleMap.addMarker(new MarkerOptions().position(loc).title(r.getReporter().toString()).snippet(r.getWaterType() + " " + r.getWaterCondition()));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         }
 
-        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+        googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
     }
 
     /*

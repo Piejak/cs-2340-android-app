@@ -9,7 +9,7 @@ public enum WaterOverallCondition {
     Treatable("Treatable"),
     Unsafe("Unsafe");
 
-    private String condition;
+    private final String condition;
 
     /**
      * Create a new water condition with the condition passed in as a string

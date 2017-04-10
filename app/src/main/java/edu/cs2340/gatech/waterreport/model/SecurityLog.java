@@ -6,14 +6,14 @@ import java.util.Date;
 /**
  * Logs activity on the system
  */
-public class SecurityLog {
+class SecurityLog {
     private static ArrayList<String> logs = new ArrayList<>();
 
     /**
      * Adds a new login attempt to the log
      * @param timestamp the time the attempt occurred
      * @param uid the id of the user trying to login
-     * @param status the success status of the attemp - successful, bad email, bad password
+     * @param status the success status of the attempt - successful, bad email, bad password
      */
     public static void logLoginAttempt(Date timestamp, String uid, String status) {
         logs.add("LOGIN " + timestamp.toString() + " " + uid + " " + status);

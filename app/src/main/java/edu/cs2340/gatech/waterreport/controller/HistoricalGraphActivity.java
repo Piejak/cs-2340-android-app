@@ -35,9 +35,9 @@ public class HistoricalGraphActivity extends GenericActivity {
 
     private int currentYear;
     private Location currentLocation;
-    private List<WaterPurityReport> purityReports = new ArrayList<>();
+    private final List<WaterPurityReport> purityReports = new ArrayList<>();
     private List<WaterPurityReport> currentReports = new ArrayList<>();
-    LineChart chart;
+    private LineChart chart;
 
     // This entire activity sucks for large amounts of reports
     @Override

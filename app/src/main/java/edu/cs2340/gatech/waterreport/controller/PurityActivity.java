@@ -1,6 +1,5 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,11 +17,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.User;
-import edu.cs2340.gatech.waterreport.model.WaterCondition;
 import edu.cs2340.gatech.waterreport.model.WaterOverallCondition;
 import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
-import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
-import edu.cs2340.gatech.waterreport.model.WaterType;
 
 
 /**
@@ -31,17 +26,13 @@ import edu.cs2340.gatech.waterreport.model.WaterType;
  */
 public class PurityActivity extends GenericActivity {
 
-    //private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     // database
     private DatabaseReference mDatabase;
 
-    private Spinner waterTypeSpinner;
+    // --Commented out by Inspection (4/9/17 7:48 PM):private Spinner waterTypeSpinner;
     private Spinner waterOverallConditionSpinner;
-    private LatLng location;
+    // --Commented out by Inspection (4/9/17 7:48 PM):private LatLng location;
     private int reportNumber;
-    private double virusPPM;
-    private double contaminantPPM;
     private double latitude;
     private double longitude;
 
@@ -57,8 +48,7 @@ public class PurityActivity extends GenericActivity {
         }
 
 
-
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        //FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         waterOverallConditionSpinner = (Spinner) findViewById(R.id.purity_condition_spinner);
@@ -119,8 +109,8 @@ public class PurityActivity extends GenericActivity {
         Location location = new Location(latitude, longitude);
         reportNumber++;
         User localUser = new User(user.getEmail(), user.getUid(), null);
-        virusPPM = Double.parseDouble(((EditText) findViewById(R.id.virus_PPM)).getText().toString());
-        contaminantPPM = Double.parseDouble(((EditText) findViewById(R.id.contaminant_PPM)).getText().toString());
+        double virusPPM = Double.parseDouble(((EditText) findViewById(R.id.virus_PPM)).getText().toString());
+        double contaminantPPM = Double.parseDouble(((EditText) findViewById(R.id.contaminant_PPM)).getText().toString());
 
         WaterPurityReport report = new WaterPurityReport(localUser, waterOverallCondition, reportNumber, location, virusPPM, contaminantPPM);
         mDatabase.child("purityReports").push().setValue(report);

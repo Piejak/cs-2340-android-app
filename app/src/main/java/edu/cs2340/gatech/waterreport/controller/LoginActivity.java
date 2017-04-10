@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Displays a rotating progress indicator when the user is logging in or registering
      */
-    public void showProgress() {
+    private void showProgress() {
         // previously invisible view
         View myView = findViewById(R.id.login_progress);
 
@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Hides the progress indicator when the login or signup is complete
      */
-    public void hideProgress() {
+    private void hideProgress() {
         // previously visible view
         final View myView = findViewById(R.id.login_progress);
 

@@ -1,6 +1,5 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,21 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.TimeZone;
 
-import edu.cs2340.gatech.waterreport.model.AccountType;
-import edu.cs2340.gatech.waterreport.model.UserInformation;
 import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
-import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 /**
  * Fragment for controlling the list of water source reports
@@ -32,12 +25,10 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
  * @since   03/1/2017
  */
 public class PurityReportListFragment extends android.support.v4.app.Fragment {
-    private RecyclerView mRecyclerView;
     private PurityReportAdapter mAdapter;
-    private RecyclerView.LayoutManager mManager;
-    private ArrayList<WaterPurityReport> waterPurityReports = new ArrayList<>();
-    private AccountType accountType;
-    private UserInformation userInformation;
+    private final ArrayList<WaterPurityReport> waterPurityReports = new ArrayList<>();
+    // --Commented out by Inspection (4/9/17 7:48 PM):private AccountType accountType;
+    // --Commented out by Inspection (4/9/17 7:48 PM):private UserInformation userInformation;
 
 
     /**
@@ -79,9 +70,9 @@ public class PurityReportListFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.purity_report_recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.purity_report_recycler_view);
 
-        mManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mManager);
 
         mAdapter = new PurityReportAdapter(waterPurityReports);

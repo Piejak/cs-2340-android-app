@@ -1,10 +1,5 @@
 package edu.cs2340.gatech.waterreport;
 
-import org.junit.Test;
-
-import edu.cs2340.gatech.waterreport.model.AccountType;
-import edu.cs2340.gatech.waterreport.model.Location;
-
 import static org.junit.Assert.*;
 
 import org.junit.Assert;
@@ -27,7 +22,7 @@ import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
  */
 public class M10Tests {
 
-    WaterPurityReport report;
+    private WaterPurityReport report;
 
     @Before
     public void setUp() {
@@ -38,20 +33,21 @@ public class M10Tests {
 
     /**
      * Tests matchingLocation Exception in WaterPurityReport.java
-     * @author Johnny Lee
+     * by Johnny Lee
      */
     @Test
     public void testExceptionMatchingLocationsInWaterPurityReport() {
         try {
             report.matchingLocations(null);
             Assert.fail("IllegalArgumentException should be thrown.");
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
+            System.out.print("");
         }
     }
 
     /**
      * Tests a valid list with and without matching locations in WaterPurityReport.java
-     * @author Johnny Lee
+     * by Johnny Lee
      */
     @Test
     public void testMatchingLocationsInWaterPurityReport() {
@@ -115,7 +111,7 @@ public class M10Tests {
 
     /**
      * Tests matchingLocation with randomly generated locations in WaterPurityReport.java
-     * @author Johnny Lee
+     * by Johnny Lee
      */
     @Test
     public void testRandomListMatchingLocationsInWaterPurityReport() {
@@ -161,7 +157,7 @@ public class M10Tests {
 
     /**
      * Tests matchingLocation with an empty list in WaterPurityReport.java
-     * @author Johnny Lee
+     * by Johnny Lee
      */
     @Test
     public void testEmptyListMatchingLocationsInWaterPurityReport() {
@@ -177,7 +173,7 @@ public class M10Tests {
 
     /**
      * Test passing a null argument to Location.validateLocation()
-     * @author Brian Piejak
+     * by Brian Piejak
      */
     @Test(expected = IllegalArgumentException.class)
     public void testNullLocation() {
@@ -186,7 +182,7 @@ public class M10Tests {
 
     /**
      * Test Location.validateLocation()
-     * @author Brian Piejak
+     * by Brian Piejak
      */
     @Test
     public void testValidateLocation() {
@@ -203,40 +199,6 @@ public class M10Tests {
         assertEquals("Latitude is min double", "Latitude must be greater than -90", Location.validateLocation(new Location(-Double.MAX_VALUE, 0)));
 
     }
-
-
-    /**
-     * Test update the user information
-     * @author  Hui Li
-     */
-    @Test
-    public void testUpdadeUserInfo() {
-        User testuser = new User("12345@qq.com", "2" , new UserInformation());
-        UserInformation testinfo = testuser.userInformation;
-        testinfo.updateAllFields("Hui Li", "Atlanta", "GT", AccountType.ADMINISTRATOR);
-        assertEquals(AccountType.ADMINISTRATOR, testinfo.getAccountType());
-        assertEquals("Hui Li", testinfo.getRealName());
-        assertEquals("Atlanta", testinfo.getAddress());
-        assertEquals("GT", testinfo.getAffiliation());
-    }
-
-    /**
-     * Test update the user information to null
-     * @author  Hui Li
-     */
-    @Test
-    public void testUpdadeUserInfonull() {
-        User testuser = new User("12345@qq.com", "2" , new UserInformation());
-        UserInformation testinfo = testuser.userInformation;
-        testinfo.updateAllFields("Hui Li", "Atlanta", "GT", AccountType.ADMINISTRATOR);
-        testinfo.updateAllFields(null,null,null,AccountType.DEFAULT);
-        assertEquals(AccountType.DEFAULT, testinfo.getAccountType());
-        assertEquals(null, testinfo.getRealName());
-        assertEquals(null, testinfo.getAddress());
-        assertEquals(null, testinfo.getAffiliation());
-    }
-
-
 
 
 }

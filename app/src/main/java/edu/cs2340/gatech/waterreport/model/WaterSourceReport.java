@@ -1,7 +1,5 @@
 package edu.cs2340.gatech.waterreport.model;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.Date;
 
 /**

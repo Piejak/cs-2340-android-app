@@ -11,20 +11,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import edu.cs2340.gatech.waterreport.model.AccountType;
-import edu.cs2340.gatech.waterreport.model.UserInformation;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 /**
@@ -34,12 +31,10 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
  * @since   03/1/2017
  */
 public class ReportListFragment extends android.support.v4.app.Fragment implements View.OnClickListener{
-    private RecyclerView mRecyclerView;
     private ReportAdapter mAdapter;
-    private RecyclerView.LayoutManager mManager;
-    private ArrayList<WaterSourceReport> waterSourceReports = new ArrayList<>();
+    private final ArrayList<WaterSourceReport> waterSourceReports = new ArrayList<>();
     private AccountType accountType;
-    private UserInformation userInformation;
+    // --Commented out by Inspection (4/9/17 7:49 PM):private UserInformation userInformation;
 
 
     /**
@@ -155,9 +150,9 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
             }
         });
 
-        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.report_recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.report_recycler_view);
 
-        mManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mManager);
 
         mAdapter = new ReportAdapter(waterSourceReports);

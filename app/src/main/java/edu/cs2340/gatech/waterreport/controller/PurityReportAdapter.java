@@ -9,7 +9,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
-import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 
 /**
  * Adapter that handles the recycler view for reports
@@ -18,16 +17,16 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
  * @since   03/1/2017
  */
 public class PurityReportAdapter extends RecyclerView.Adapter<PurityReportAdapter.ViewHolder> {
-    private ArrayList<WaterPurityReport> mDataset;
+    private final ArrayList<WaterPurityReport> mDataset;
 
     /**
      * Inner view holder class that assigns view elements for each card in the recycler view
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mVirusPPMText;
-        public TextView mContaminantPPMText;
+        public final TextView mVirusPPMText;
+        public final TextView mContaminantPPMText;
 //        public TextView mPurityReporterText;
-        public TextView mDateText;
+        public final TextView mDateText;
 
         public ViewHolder(View v) {
             super(v);

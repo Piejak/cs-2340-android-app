@@ -11,7 +11,7 @@ public enum WaterType {
     Spring("Spring"),
     Other("Other");
 
-    private String type;
+    private final String type;
 
     /**
      * construct a new water type

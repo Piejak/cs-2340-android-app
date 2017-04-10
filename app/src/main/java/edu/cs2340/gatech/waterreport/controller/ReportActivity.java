@@ -7,8 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,8 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import edu.cs2340.gatech.waterreport.model.Location;
 import edu.cs2340.gatech.waterreport.model.User;
 import edu.cs2340.gatech.waterreport.model.WaterCondition;
-import edu.cs2340.gatech.waterreport.model.WaterOverallCondition;
-import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
 import edu.cs2340.gatech.waterreport.model.WaterType;
 
@@ -31,14 +29,12 @@ import edu.cs2340.gatech.waterreport.model.WaterType;
  */
 public class ReportActivity extends GenericActivity {
 
-    //private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     // database
     private DatabaseReference mDatabase;
 
     private Spinner waterTypeSpinner;
     private Spinner waterConditionSpinner;
-    private LatLng location;
+    // --Commented out by Inspection (4/9/17 7:48 PM):private LatLng location;
     private int reportNumber;
     private EditText latitudeEntry;
     private EditText longitudeEntry;
@@ -58,7 +54,7 @@ public class ReportActivity extends GenericActivity {
             longitudeEntry.setText(String.valueOf(extras.getDouble("REPORT_LONG")), TextView.BufferType.EDITABLE);
         }
 
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        //FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         waterTypeSpinner = (Spinner) findViewById(R.id.type_spinner);
@@ -87,17 +83,21 @@ public class ReportActivity extends GenericActivity {
 
     }
 
-    public void currentLocationButtonPressed(View v) {
-        // pause and save state then switch state to map and grab a latitude/longitude from map
-        // TODO
-        switchActivity(LandingActivity.class);
-    }
+// --Commented out by Inspection START (4/9/17 7:49 PM):
+//    public void currentLocationButtonPressed(View v) {
+//        // pause and save state then switch state to map and grab a latitude/longitude from map
+//        // TODO
+//        switchActivity(LandingActivity.class);
+//    }
+// --Commented out by Inspection STOP (4/9/17 7:49 PM)
 
-    public void pickLocationButtonPressed(View v) {
-        // pause and save state then switch state to map and grab a latitude/longitude from map
-        //TODO
-        switchActivity(LandingActivity.class);
-    }
+// --Commented out by Inspection START (4/9/17 7:49 PM):
+//    public void pickLocationButtonPressed(View v) {
+//        // pause and save state then switch state to map and grab a latitude/longitude from map
+//        //TODO
+//        switchActivity(LandingActivity.class);
+//    }
+// --Commented out by Inspection STOP (4/9/17 7:49 PM)
 
 
     /**
@@ -121,8 +121,10 @@ public class ReportActivity extends GenericActivity {
         double longitude = Double.parseDouble(longitudeEntry.getText().toString());
         if (latitudeEntry.getText().toString().equals("")) {
             // show a snackbar saying that the latitude is required
+            Toast.makeText(this, "Enter a latitude", Toast.LENGTH_LONG).show();
         } else if (longitudeEntry.getText().toString().equals("")) {
             // show a snackbar saying that the longitude is required
+            Toast.makeText(this, "Enter a longitude", Toast.LENGTH_LONG).show();
         } else {
             Location location = new Location(latitude, longitude);
             reportNumber++;

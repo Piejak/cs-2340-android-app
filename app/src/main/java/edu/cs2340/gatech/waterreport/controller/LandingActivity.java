@@ -1,6 +1,5 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -169,7 +168,7 @@ public class LandingActivity extends GenericActivity {
      * @param item the item that was selected
      * @return true if the selection was successful
      */
-    public boolean selectDrawerItem(MenuItem item) {
+    private boolean selectDrawerItem(MenuItem item) {
 
         int id = item.getItemId();
         Fragment fragment = null;

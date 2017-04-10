@@ -41,7 +41,6 @@ public class ProfileActivity extends GenericActivity {
     private EditText mAgeView;
     private EditText mAffiliationView;
     private Spinner mAccountTypeSpinner;
-    private ArrayAdapter<AccountType> spinnerAdapter;
 
     // user profile stored in firebase
     private UserInformation userInformation;
@@ -66,14 +65,14 @@ public class ProfileActivity extends GenericActivity {
         mEmailView.setText(mUser.getEmail(), TextView.BufferType.EDITABLE);
 
         //setting up spinner
-        spinnerAdapter = new ArrayAdapter<AccountType>(this,
+        ArrayAdapter<AccountType> spinnerAdapter = new ArrayAdapter<AccountType>(this,
                 android.R.layout.simple_spinner_item,
                 AccountType.values()) {
-                // this is so it hides the DEFAULT enum
-                @Override
-                public int getCount() {
-                    return(AccountType.values().length - 1); // Truncate the list
-                }
+            // this is so it hides the DEFAULT enum
+            @Override
+            public int getCount() {
+                return (AccountType.values().length - 1); // Truncate the list
+            }
         };
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAccountTypeSpinner.setAdapter(spinnerAdapter);
@@ -82,7 +81,7 @@ public class ProfileActivity extends GenericActivity {
         ValueEventListener userInformationListener = new ValueEventListener() {
             /**
              *getting UserInformation class from database
-             * @param dataSnapshot the file Filebase Database location.
+             * @param dataSnapshot the file Firebase Database location.
              */
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

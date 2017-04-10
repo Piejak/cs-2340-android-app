@@ -45,10 +45,7 @@ public class Location {
     }
 
     public boolean equals(Location other) {
-        if (latitude == other.getLatitude() && longitude == other.getLongitude()) {
-            return true;
-        }
-        return false;
+        return latitude == other.getLatitude() && longitude == other.getLongitude();
     }
 
     /**

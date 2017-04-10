@@ -1,8 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,7 @@ import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
  * @since   03/1/2017
  */
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
-    private ArrayList<WaterSourceReport> mDataset;
+    private final ArrayList<WaterSourceReport> mDataset;
     private static ClickListener clickListener;
     private static LongClickListener longClickListener;
 
@@ -29,11 +27,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
 
     {
-        public TextView mUserText;
-        public TextView mDateText;
-        public TextView mConditionText;
-        public TextView mTypeText;
-        public View v;
+        public final TextView mUserText;
+        public final TextView mDateText;
+        public final TextView mConditionText;
+        public final TextView mTypeText;
+        public final View v;
 
         public ViewHolder(View v) {
             super(v);

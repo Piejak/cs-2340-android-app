@@ -45,10 +45,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
     private EditText mAgeView;
     private EditText mAffiliationView;
     private Spinner mAccountTypeSpinner;
-    private ArrayAdapter<AccountType> spinnerAdapter;
-
-    private Button mCancelButton;
-    private Button mProfileButton;
 
     // user profile stored in firebase
     private UserInformation userInformation;
@@ -77,23 +73,23 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         mAffiliationView = (EditText) getActivity().findViewById(R.id.profile_affiliation);
         mAccountTypeSpinner = (Spinner) getActivity().findViewById(R.id.profile_account_type);
 
-        mCancelButton = (Button) getActivity().findViewById(R.id.cancelProfileButton);
+        Button mCancelButton = (Button) getActivity().findViewById(R.id.cancelProfileButton);
         mCancelButton.setOnClickListener(this);
 
-        mProfileButton = (Button) getActivity().findViewById(R.id.changeProfileButton);
+        Button mProfileButton = (Button) getActivity().findViewById(R.id.changeProfileButton);
         mProfileButton.setOnClickListener(this);
 
         // setting profile texts
         mEmailView.setText(mUser.getEmail(), TextView.BufferType.EDITABLE);
 
         //setting up spinner
-        spinnerAdapter = new ArrayAdapter<AccountType>(getContext(),
+        ArrayAdapter<AccountType> spinnerAdapter = new ArrayAdapter<AccountType>(getContext(),
                 android.R.layout.simple_spinner_item,
                 AccountType.values()) {
             // this is so it hides the DEFAULT enum
             @Override
             public int getCount() {
-                return(AccountType.values().length - 1); // Truncate the list
+                return (AccountType.values().length - 1); // Truncate the list
             }
         };
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -103,7 +99,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment implements 
         ValueEventListener userInformationListener = new ValueEventListener() {
             /**
              *getting UserInformation class from database
-             * @param dataSnapshot the file Filebase Database location.
+             * @param dataSnapshot the file Firebase Database location.
              */
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
