@@ -21,6 +21,7 @@ import edu.cs2340.gatech.waterreport.model.WaterCondition;
 import edu.cs2340.gatech.waterreport.model.WaterOverallCondition;
 import edu.cs2340.gatech.waterreport.model.WaterPurityReport;
 import edu.cs2340.gatech.waterreport.model.WaterSourceReport;
+import edu.cs2340.gatech.waterreport.model.WaterType;
 
 
 /**
@@ -236,6 +237,50 @@ public class M10Tests {
         assertEquals(null, testInfo.getAddress());
         assertEquals(null, testInfo.getAffiliation());
     }
+
+    /**
+     * Test WaterSourceReport
+     *  by Yudong Shao
+     */
+
+    public void testWaterSourceReport() {
+        WaterSourceReport wsr = new WaterSourceReport(new User("85223375@163.com", "3" ,
+                new UserInformation()), WaterType.Lake, WaterCondition.TreatableClear,
+                3, new Location(5, 6));
+        User testUser = wsr.getReporter();
+        UserInformation testInfo = wsr.getReporter().userInformation;
+        testInfo.updateAllFields("Yudong", "Atlanta", "GT", AccountType.MANAGER);
+        Location testLocation = wsr.getLocation();
+
+        assertEquals(AccountType.MANAGER, testInfo.getAccountType());
+        assertEquals("Yudong", testInfo.getRealName());
+        assertEquals("Atlanta", testInfo.getAddress());
+        assertEquals("GT", testInfo.getAffiliation());
+        assertEquals(WaterType.Lake, wsr.getWaterType());
+        assertEquals(WaterCondition.TreatableClear, wsr.getWaterCondition());
+        assertEquals(5, wsr.getLocation().getLatitude());
+        assertEquals(6, wsr.getLocation().getLongitude());
+
+    }
+
+    /**
+     * Test WaterSourceReport with null value
+     *  by Yudong Shao
+     */
+    public void testWaterSourceReportNull() {
+        WaterSourceReport wsr = new WaterSourceReport(new User("85223375@163.com", "3" ,
+                new UserInformation()), WaterType.Lake, WaterCondition.TreatableClear,
+                3, null);
+        User testUser = wsr.getReporter();
+        UserInformation testInfo = wsr.getReporter().userInformation;
+        testInfo.updateAllFields("Yudong", "Atlanta", "GT", AccountType.MANAGER);
+        Location testLocation = wsr.getLocation();
+
+
+        assertEquals(null, wsr.getLocation());
+
+    }
+
 
     /**
      * Test WaterCondition
