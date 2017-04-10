@@ -1,5 +1,7 @@
 package edu.cs2340.gatech.waterreport;
 
+import edu.cs2340.gatech.waterreport.model.AccountType;
+
 import static org.junit.Assert.*;
 
 import org.junit.Assert;
@@ -200,5 +202,34 @@ public class M10Tests {
 
     }
 
+    /**
+     * Test update the user information
+     * by Hui Li
+     */
+    @Test
+    public void testUpdateUserInfo() {
+        User testUser = new User("12345@qq.com", "2" , new UserInformation());
+        UserInformation testInfo = testUser.userInformation;
+        testInfo.updateAllFields("Hui Li", "Atlanta", "GT", AccountType.ADMINISTRATOR);
+        assertEquals(AccountType.ADMINISTRATOR, testInfo.getAccountType());
+        assertEquals("Hui Li", testInfo.getRealName());
+        assertEquals("Atlanta", testInfo.getAddress());
+        assertEquals("GT", testInfo.getAffiliation());
+    }
 
+    /**
+    * Test update the user information to null
+    * by Hui Li
+    */
+    @Test
+    public void testUpdateUserInfoNull() {
+        User testUser = new User("12345@qq.com", "2" , new UserInformation());
+        UserInformation testInfo = testUser.userInformation;
+        testInfo.updateAllFields("Hui Li", "Atlanta", "GT", AccountType.ADMINISTRATOR);
+        testInfo.updateAllFields(null,null,null,AccountType.DEFAULT);
+        assertEquals(AccountType.DEFAULT, testInfo.getAccountType());
+        assertEquals(null, testInfo.getRealName());
+        assertEquals(null, testInfo.getAddress());
+        assertEquals(null, testInfo.getAffiliation());
+    }
 }
