@@ -42,7 +42,6 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:id="@+id/location_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/location"
@@ -112,7 +111,6 @@
         android:text="@string/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/submit_report"
         android:onClick="submitReportButtonPressed"
         android:layout_above="@+id/cancel_report"
         android:layout_alignParentStart="true" />

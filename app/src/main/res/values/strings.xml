@@ -16,29 +16,15 @@
     <string name="profile">Profile</string>
     <string name="logout">Log out</string>
     <string name="location">Location</string>
-    <string name="current_location">Current location</string>
     <string name="type">Type</string>
     <string name="condition">Condition</string>
     <string name="have_account_prompt">Already signed up?</string>
     <string name="register_prompt">Don\'t have an account?</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="prompt_login">Already signed up?</string>
-    <string name="prompt_register">Don\'t have an account?</string>
     <string name="prompt_reset_email">Please enter your email address below</string>
     <string name="reset_password">Reset Password</string>
-    <string name="pick_location_on_map">Pick location on map</string>
-    <string name="enter_location">Enter latitude and longitude</string>
     <string name="map">Report Map</string>
     <string name="ppm">PPM</string>
-    <string name="switch_report_to_purity">Switch to purity report</string>
-    <string name="switch_report_to_source">Switch to source report</string>
     <string name="purity_list">Purity Reports</string>
 
 

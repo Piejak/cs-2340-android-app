@@ -115,24 +115,26 @@ public class ReportActivity extends GenericActivity {
     public void submitReportButtonPressed(View v) {
         //submitting the report pushes it to firebase now
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
-        WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
-        double latitude = Double.parseDouble(latitudeEntry.getText().toString());
-        double longitude = Double.parseDouble(longitudeEntry.getText().toString());
-        if (latitudeEntry.getText().toString().equals("")) {
-            // show a snackbar saying that the latitude is required
-            Toast.makeText(this, "Enter a latitude", Toast.LENGTH_LONG).show();
-        } else if (longitudeEntry.getText().toString().equals("")) {
-            // show a snackbar saying that the longitude is required
-            Toast.makeText(this, "Enter a longitude", Toast.LENGTH_LONG).show();
-        } else {
-            Location location = new Location(latitude, longitude);
-            reportNumber++;
-            User localUser = new User(user.getEmail(), user.getUid(), null);
-            WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
-            mDatabase.child("sourceReports").push().setValue(report);
-            mDatabase.child("reportNumber").setValue(reportNumber);
-            switchActivity(LandingActivity.class);
+        if (user != null) {
+            WaterType waterType = (WaterType) waterTypeSpinner.getSelectedItem();
+            WaterCondition waterCondition = (WaterCondition) waterConditionSpinner.getSelectedItem();
+            double latitude = Double.parseDouble(latitudeEntry.getText().toString());
+            double longitude = Double.parseDouble(longitudeEntry.getText().toString());
+            if (latitudeEntry.getText().toString().equals("")) {
+                // show a snackbar saying that the latitude is required
+                Toast.makeText(this, "Enter a latitude", Toast.LENGTH_LONG).show();
+            } else if (longitudeEntry.getText().toString().equals("")) {
+                // show a snackbar saying that the longitude is required
+                Toast.makeText(this, "Enter a longitude", Toast.LENGTH_LONG).show();
+            } else {
+                Location location = new Location(latitude, longitude);
+                reportNumber++;
+                User localUser = new User(user.getEmail(), user.getUid(), null);
+                WaterSourceReport report = new WaterSourceReport(localUser, waterType, waterCondition, reportNumber, location);
+                mDatabase.child("sourceReports").push().setValue(report);
+                mDatabase.child("reportNumber").setValue(reportNumber);
+                switchActivity(LandingActivity.class);
+            }
         }
     }
 }

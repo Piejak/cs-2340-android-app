@@ -104,17 +104,19 @@ public class PurityActivity extends GenericActivity {
     public void submitPurityReportButtonPressed(View v) {
         //submitting the report pushes it to firebase now
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        WaterOverallCondition waterOverallCondition = (WaterOverallCondition) waterOverallConditionSpinner.getSelectedItem();
+        if (user != null) {
+            WaterOverallCondition waterOverallCondition = (WaterOverallCondition) waterOverallConditionSpinner.getSelectedItem();
 
-        Location location = new Location(latitude, longitude);
-        reportNumber++;
-        User localUser = new User(user.getEmail(), user.getUid(), null);
-        double virusPPM = Double.parseDouble(((EditText) findViewById(R.id.virus_PPM)).getText().toString());
-        double contaminantPPM = Double.parseDouble(((EditText) findViewById(R.id.contaminant_PPM)).getText().toString());
+            Location location = new Location(latitude, longitude);
+            reportNumber++;
+            User localUser = new User(user.getEmail(), user.getUid(), null);
+            double virusPPM = Double.parseDouble(((EditText) findViewById(R.id.virus_PPM)).getText().toString());
+            double contaminantPPM = Double.parseDouble(((EditText) findViewById(R.id.contaminant_PPM)).getText().toString());
 
-        WaterPurityReport report = new WaterPurityReport(localUser, waterOverallCondition, reportNumber, location, virusPPM, contaminantPPM);
-        mDatabase.child("purityReports").push().setValue(report);
-        mDatabase.child("reportNumber").setValue(reportNumber);
-        switchActivity(LandingActivity.class);
+            WaterPurityReport report = new WaterPurityReport(localUser, waterOverallCondition, reportNumber, location, virusPPM, contaminantPPM);
+            mDatabase.child("purityReports").push().setValue(report);
+            mDatabase.child("reportNumber").setValue(reportNumber);
+            switchActivity(LandingActivity.class);
+        }
     }
 }

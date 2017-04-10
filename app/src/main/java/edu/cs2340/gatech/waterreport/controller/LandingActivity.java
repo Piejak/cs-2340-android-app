@@ -88,46 +88,46 @@ public class LandingActivity extends GenericActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                selectDrawerItem(menuItem);
-                return true;
+                return selectDrawerItem(menuItem);
             }
         });
 
         // set the first item (reports) as being selected
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        DatabaseReference userQuery = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        userQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    if (userSnapshot.getKey().equals("accountType")) {
-                        accountType = userSnapshot.getValue(AccountType.class);
-                    }
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            DatabaseReference userQuery = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
+            userQuery.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        if (userSnapshot.getKey().equals("accountType")) {
+                            accountType = userSnapshot.getValue(AccountType.class);
+                        }
 //                    accountType = userSnapshot.getValue(AccountType.class);
 //                    Log.e("USER INFO", userInformation.toString());
 
+                    }
+                    if (accountType != AccountType.DEFAULT
+                            && accountType != AccountType.USER) {
+                        //navigationView.getMenu().getItem(R.id.nav_purity_report_list).setVisible(true);
+                        navigationView.inflateMenu(R.menu.purity_drawer_menu);
+                    }
                 }
-                if (accountType != AccountType.DEFAULT
-                        && accountType != AccountType.USER) {
-                    //navigationView.getMenu().getItem(R.id.nav_purity_report_list).setVisible(true);
-                    navigationView.inflateMenu(R.menu.purity_drawer_menu);
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("Cancel", "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        });
-        // change the default header text to the user's email
-        View headerView = navigationView.getHeaderView(0);
-        TextView headerText = (TextView) headerView.findViewById(R.id.header_text);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            headerText.setText(user.getEmail());
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w("Cancel", "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            });
+
+            // change the default header text to the user's email
+            View headerView = navigationView.getHeaderView(0);
+            TextView headerText = (TextView) headerView.findViewById(R.id.header_text);
+            headerText.setText(currentUser.getEmail());
         }
     }
 
@@ -209,6 +209,8 @@ public class LandingActivity extends GenericActivity {
             }
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        } else {
+            return false;
         }
 
         // close the navdrawer

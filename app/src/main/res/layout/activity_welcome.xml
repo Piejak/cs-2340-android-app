@@ -10,7 +10,6 @@
         android:text="@string/welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/welcome_text"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
         android:textAlignment="center"
         android:padding="20dp" />
@@ -19,7 +18,6 @@
         android:text="@string/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/select_login"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_margin="10dp"
         android:onClick="onLoginButtonClicked" />
@@ -28,7 +26,6 @@
         android:text="@string/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/select_register"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_margin="10dp"
         android:onClick="onRegisterButtonClicked" />

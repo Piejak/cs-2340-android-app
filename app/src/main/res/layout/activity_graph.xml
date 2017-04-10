@@ -20,7 +20,6 @@
         android:text="Virus PPM" />
 
     <Button
-        android:id="@+id/change_to_contaminant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -53,7 +52,6 @@
         android:inputType="numberDecimal" />
 
     <Button
-        android:id="@+id/graph_location_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -86,7 +84,6 @@
         android:text="Previous Year" />
 
     <Button
-        android:id="@+id/next_year_button"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

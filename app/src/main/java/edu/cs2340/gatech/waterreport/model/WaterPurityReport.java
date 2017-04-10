@@ -88,16 +88,36 @@ public class WaterPurityReport {
     public WaterOverallCondition getWaterOverallCondition() {
         return overallCondition;
     }
+
+    /**
+     * gets the virusPPM of the water source
+     * @return virusPPM
+     */
     public double getVirusPPM() {
         return virusPPM;
     }
+
+    /**
+     * gets the contaminantPPM of the water source
+     * @return contaminantPPM
+     */
     public double getContaminantPPM() {
         return contaminantPPM;
     }
+
+    /**
+     * gets the location of the water source
+     * @return location of the water source
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     * checks to see if this water location matches another
+     * @param other the other location being checked
+     * @return true if the location matches, false otherwise
+     */
     public boolean locationMatch(Location other) {
         return location.equals(other);
     }

@@ -1,6 +1,5 @@
 package edu.cs2340.gatech.waterreport;
 
-import android.app.admin.SecurityLog;
 
 import edu.cs2340.gatech.waterreport.model.AccountType;
 
@@ -272,36 +271,36 @@ public class M10Tests {
                 new UserInformation()), WaterType.Lake, WaterCondition.TreatableClear,
                 3, null);
         User testUser = wsr.getReporter();
-        UserInformation testInfo = wsr.getReporter().userInformation;
+        UserInformation testInfo = testUser.userInformation;
         testInfo.updateAllFields("Yudong", "Atlanta", "GT", AccountType.MANAGER);
         Location testLocation = wsr.getLocation();
 
 
-        assertEquals(null, wsr.getLocation());
+        assertEquals(null, testLocation);
 
     }
 
 
-    /**
-     * Test WaterCondition
-     *  by Jimmy Dinh-Nguyen
-     */
-    public void testWaterCondition() {
-        WaterCondition w = new WaterCondition("Waste");
-        WaterCondition w = new WaterCondition("Treatable-Clear");
-        WaterCondition w = new WaterCondition("Treatable-Muddy");
-        WaterCondition w = new WaterCondition("Potable");
-    }
-
-    /**
-     * Test AccountType
-     * by Jimmy Dinh-Nguyen
-     */
-    public void testAccountType() {
-        AccountType aT1 = new AccountType("User");
-        AccountType aT2 = new AccountType("Worker");
-        AccountType aT3 = new AccountType("Manager");
-        AccountType aT4 = new AccountType("Administrator");
-
-    }
+//    /**
+//     * Test WaterCondition
+//     *  by Jimmy Dinh-Nguyen
+//     */
+//    public void testWaterCondition() {
+//        WaterCondition w = new WaterCondition("Waste");
+//        WaterCondition w = new WaterCondition("Treatable-Clear");
+//        WaterCondition w = new WaterCondition("Treatable-Muddy");
+//        WaterCondition w = new WaterCondition("Potable");
+//    }
+//
+//    /**
+//     * Test AccountType
+//     * by Jimmy Dinh-Nguyen
+//     */
+//    public void testAccountType() {
+//        AccountType aT1 = new AccountType("User");
+//        AccountType aT2 = new AccountType("Worker");
+//        AccountType aT3 = new AccountType("Manager");
+//        AccountType aT4 = new AccountType("Administrator");
+//
+//    }
 }

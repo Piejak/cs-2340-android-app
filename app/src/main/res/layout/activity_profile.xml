@@ -3,7 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
-    android:id="@+id/profile_layout"
     android:weightSum="1">
 
     <LinearLayout
@@ -77,6 +76,15 @@
         android:layout_height="70dp">
 
         <Button
+            android:text="Cancel"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancelProfileButton"
+            android:layout_weight="0.26"
+            android:onClick="cancelProfileButtonPressed"
+            />
+
+        <Button
             android:text="Change Profile"
             android:layout_height="wrap_content"
             android:layout_weight="0.26"
@@ -85,13 +93,6 @@
             android:layout_width="125dp"
             />
 
-        <Button
-            android:text="Cancel"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/cancelProfileButton"
-            android:layout_weight="0.26"
-            android:onClick="cancelProfileButtonPressed"
-            />
+
     </LinearLayout>
 </RelativeLayout>

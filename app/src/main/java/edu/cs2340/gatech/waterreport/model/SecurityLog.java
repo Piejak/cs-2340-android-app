@@ -7,7 +7,7 @@ import java.util.Date;
  * Logs activity on the system
  */
 class SecurityLog {
-    private static ArrayList<String> logs = new ArrayList<>();
+    private static final ArrayList<String> logs = new ArrayList<>();
 
     /**
      * Adds a new login attempt to the log

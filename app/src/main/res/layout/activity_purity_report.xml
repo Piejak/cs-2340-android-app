@@ -42,7 +42,6 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:id="@+id/PPM_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ppm"
@@ -67,7 +66,6 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/submit_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="submitPurityReportButtonPressed"

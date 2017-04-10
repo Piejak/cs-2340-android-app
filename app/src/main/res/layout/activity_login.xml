@@ -20,12 +20,10 @@
         android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -62,7 +60,6 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/login_submit"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,13 +72,11 @@
                 android:text="@string/register_prompt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/no_account_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textAlignment="center"
                 android:paddingTop="20dp" />
 
             <Button
-                android:id="@+id/register_from_login"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +84,6 @@
                 android:text="@string/register" />
 
             <Button
-                android:id="@+id/forgotPasswordButton"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

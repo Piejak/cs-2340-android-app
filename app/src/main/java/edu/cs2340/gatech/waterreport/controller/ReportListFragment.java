@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,79 +49,82 @@ public class ReportListFragment extends android.support.v4.app.Fragment implemen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        DatabaseReference userQuery = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        userQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    Log.e("INFO", userSnapshot.toString());
-                    if (userSnapshot.getKey().equals("accountType")) {
-                        accountType = userSnapshot.getValue(AccountType.class);
-                    }
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            DatabaseReference userQuery = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
+            userQuery.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                        Log.e("INFO", userSnapshot.toString());
+                        if (userSnapshot.getKey().equals("accountType")) {
+                            accountType = userSnapshot.getValue(AccountType.class);
+                        }
 //                    accountType = userSnapshot.getValue(AccountType.class);
 //                    Log.e("USER INFO", userInformation.toString());
-                    Log.e("ACCOUNT", accountType + "");
-                    mAdapter.setOnItemClickListener(new ReportAdapter.ClickListener() {
-                        @Override
-                        public void onItemClick(int position, View v) {
-                            Intent intent = new Intent(getActivity(), ReportActivity.class);
-                            intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
-                            intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
-                            startActivity(intent);
-                        }
-                    });
-                    mAdapter.setOnItemLongClickListener(new ReportAdapter.LongClickListener() {
-                        @Override
-                        public void onItemLongClick(final int position, View v) {
-                            PopupMenu popupMenu = new PopupMenu(getContext(), v);
-
-                            popupMenu.inflate(R.menu.report_list_popup_menu);
-                            Menu menu = popupMenu.getMenu();
-
-                            // Hiding menu options depending on user type
-                            if (accountType != AccountType.MANAGER) {
-                                if (accountType != AccountType.WORKER) {
-                                    menu.findItem(R.id.nav_purity_report).setVisible(false);
-                                }
-                                menu.findItem(R.id.nav_historical_graph).setVisible(false);
+                        Log.e("ACCOUNT", accountType + "");
+                        mAdapter.setOnItemClickListener(new ReportAdapter.ClickListener() {
+                            @Override
+                            public void onItemClick(int position, View v) {
+                                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                                intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                                intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                                startActivity(intent);
                             }
+                        });
+                        mAdapter.setOnItemLongClickListener(new ReportAdapter.LongClickListener() {
+                            @Override
+                            public void onItemLongClick(final int position, View v) {
+                                PopupMenu popupMenu = new PopupMenu(getContext(), v);
 
-                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    if (item.getItemId() == R.id.nav_source_report) {
-                                        Intent intent = new Intent(getActivity(), ReportActivity.class);
-                                        intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
-                                        intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
-                                        startActivity(intent);
-                                    } else if (item.getItemId() == R.id.nav_purity_report) {
-                                        Intent intent = new Intent(getActivity(), PurityActivity.class);
-                                        intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
-                                        intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
-                                        startActivity(intent);
-                                    } else {
-                                        Intent intent = new Intent(getActivity(), HistoricalGraphActivity.class);
-                                        intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
-                                        intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
-                                        startActivity(intent);
+                                popupMenu.inflate(R.menu.report_list_popup_menu);
+                                Menu menu = popupMenu.getMenu();
+
+                                // Hiding menu options depending on user type
+                                if (accountType != AccountType.MANAGER) {
+                                    if (accountType != AccountType.WORKER) {
+                                        menu.findItem(R.id.nav_purity_report).setVisible(false);
                                     }
-                                    return true;
+                                    menu.findItem(R.id.nav_historical_graph).setVisible(false);
                                 }
-                            });
 
-                            popupMenu.show();
-                        }
-                    });
+                                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        if (item.getItemId() == R.id.nav_source_report) {
+                                            Intent intent = new Intent(getActivity(), ReportActivity.class);
+                                            intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                                            intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                                            startActivity(intent);
+                                        } else if (item.getItemId() == R.id.nav_purity_report) {
+                                            Intent intent = new Intent(getActivity(), PurityActivity.class);
+                                            intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                                            intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                                            startActivity(intent);
+                                        } else {
+                                            Intent intent = new Intent(getActivity(), HistoricalGraphActivity.class);
+                                            intent.putExtra("REPORT_LAT", waterSourceReports.get(position).getLocation().getLatitude());
+                                            intent.putExtra("REPORT_LONG", waterSourceReports.get(position).getLocation().getLongitude());
+                                            startActivity(intent);
+                                        }
+                                        return true;
+                                    }
+                                });
+
+                                popupMenu.show();
+                            }
+                        });
+                    }
                 }
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w("Cancel", "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            });
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("Cancel", "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        });
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_report_list, container, false);
