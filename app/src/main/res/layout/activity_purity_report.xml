@@ -66,30 +66,14 @@
 
     </LinearLayout>
 
-    <TextView
-        android:text="@string/condition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/condition_label"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:layout_below="@+id/latitude_longitude_entry"
-        android:layout_alignParentStart="true" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/purity_condition_spinner"
-        android:layout_below="@+id/condition_label"
-        android:layout_alignParentStart="true" />
-
     <Button
         android:id="@+id/submit_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/purity_condition_spinner"
         android:onClick="submitPurityReportButtonPressed"
-        android:text="@string/submit" />
+        android:text="@string/submit"
+        android:layout_above="@+id/cancel_report"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/cancel"
@@ -97,7 +81,26 @@
         android:layout_height="wrap_content"
         android:id="@+id/cancel_report"
         android:onClick="cancelReportButtonPressed"
-        android:layout_below="@+id/submit_report"
+        android:layout_marginBottom="7dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/condition_label"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:layout_below="@+id/latitude_longitude_entry"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="60dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/purity_condition_spinner"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/condition_label"
         android:layout_alignParentStart="true" />
 
 
