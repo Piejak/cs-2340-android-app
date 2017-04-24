@@ -50,6 +50,10 @@ public class UserSecurityLog {
         return email;
     }
 
+    public void setSecurityLogEmail(String email) {
+        this.email = email;
+    }
+
     public void setUserID(String userID) {
         this.userID = userID;
     }
