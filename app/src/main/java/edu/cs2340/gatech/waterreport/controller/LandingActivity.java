@@ -1,5 +1,6 @@
 package edu.cs2340.gatech.waterreport.controller;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.cs2340.gatech.waterreport.model.AccountType;
+import edu.cs2340.gatech.waterreport.model.User;
 
 /**
  * A landing screen that user can logout or view the profile
@@ -34,7 +37,7 @@ import edu.cs2340.gatech.waterreport.model.AccountType;
 public class LandingActivity extends GenericActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private AccountType accountType;
-
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

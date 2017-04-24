@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Logs activity on the system
  */
-class SecurityLog {
+public class SecurityLogCustom {
     private static final ArrayList<String> logs = new ArrayList<>();
 
     /**

@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class User implements Serializable {
     public String email;
     public String uid;
+    private int loginAttempts;
+    private boolean isBanned;
     public UserInformation userInformation;
 
     /**
@@ -24,9 +26,35 @@ public class User implements Serializable {
      * @param userInformation the user information object associated with the user
      */
     public User(String email, String uid, UserInformation userInformation) {
+        loginAttempts = 0;
+        isBanned = false;
         this.email = email;
         this.uid = uid;
         this.userInformation = userInformation;
+    }
+
+    public void incrementLoginAttempts() {
+        loginAttempts++;
+    }
+
+    public void resetLoginAttempts() {
+        loginAttempts = 0;
+    }
+
+    public int getLoginAttempts() {
+        return loginAttempts;
+    }
+
+    public void banUser() {
+        isBanned = true;
+    }
+
+    public void unbanUser() {
+        isBanned = false;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
     }
 
     @Override

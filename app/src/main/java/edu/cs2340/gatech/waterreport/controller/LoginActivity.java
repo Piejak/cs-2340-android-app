@@ -2,6 +2,7 @@ package edu.cs2340.gatech.waterreport.controller;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.admin.SecurityLog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Date;
+
+import edu.cs2340.gatech.waterreport.model.SecurityLogCustom;
+import edu.cs2340.gatech.waterreport.model.User;
 
 /**
  * A login screen that offers login via email/password.
@@ -38,7 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     // Firebase instance variables
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    private DatabaseReference mDatabase;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,19 +154,45 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(mLoginEmailView.getText().toString(), mLoginPasswordView.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull final Task<AuthResult> task) {
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
                         Log.d("LoginActivity", "mAuth:signIn:onComplete::" + task.isSuccessful());
-
+                        SecurityLogCustom.logLoginAttempt(new Date(), currentUser.getUid(), "Attempt");
                         hideProgress();
+                        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
+                        ValueEventListener valueEventListener = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                user = dataSnapshot.getValue(User.class);
+                                if (!task.isSuccessful()) {
+                                    //the creation failed
+                                    if (user.getLoginAttempts() >= 3) {
+                                        user.banUser();
+                                        Toast.makeText(LoginActivity.this, "Account locked. Please contact admin", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                    user.incrementLoginAttempts();
+                                    mDatabase.setValue(user);
+                                } else {
+                                    if (!user.isBanned()) {
+                                        Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Account locked. Please contact admin", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                Log.e("Report", "Successful user");
+                            }
 
-                        if (!task.isSuccessful()) {
-                            //the creation failed
-                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e("Report", databaseError.getMessage());
+                            }
+
+                        };
+                        mDatabase.addListenerForSingleValueEvent(valueEventListener);
                     }
                 });
     }

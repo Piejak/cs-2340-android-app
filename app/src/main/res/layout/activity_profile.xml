@@ -85,13 +85,12 @@
             />
 
         <Button
-            android:text="Change Profile"
+            android:id="@+id/changeProfileButton"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.26"
-            android:id="@+id/changeProfileButton"
             android:onClick="changeProfileButtonPressed"
-            android:layout_width="125dp"
-            />
+            android:text="Save Changes" />
 
 
     </LinearLayout>
