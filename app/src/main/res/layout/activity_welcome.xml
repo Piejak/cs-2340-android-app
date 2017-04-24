@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:layout_gravity="center_vertical"
-    >
+    android:weightSum="1">
 
     <TextView
         android:text="@string/welcome"
@@ -13,6 +14,13 @@
         android:textAppearance="@android:style/TextAppearance.Material.Title"
         android:textAlignment="center"
         android:padding="20dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/realsplash"
+        android:id="@+id/imageView3"
+        android:layout_weight="0.98" />
 
     <Button
         android:text="@string/login"
@@ -29,4 +37,5 @@
         android:layout_margin="10dp"
         android:onClick="onRegisterButtonClicked"
         android:text="@string/register" />
+
 </LinearLayout>
