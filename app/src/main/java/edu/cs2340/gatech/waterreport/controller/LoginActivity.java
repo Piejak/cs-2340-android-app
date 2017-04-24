@@ -29,6 +29,7 @@ import java.util.Date;
 
 import edu.cs2340.gatech.waterreport.model.SecurityLogCustom;
 import edu.cs2340.gatech.waterreport.model.User;
+import edu.cs2340.gatech.waterreport.model.UserSecurityLog;
 
 /**
  * A login screen that offers login via email/password.
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
-    private User user;
+    private UserSecurityLog userLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,19 +164,22 @@ public class LoginActivity extends AppCompatActivity {
                         ValueEventListener valueEventListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                user = dataSnapshot.getValue(User.class);
+                                userLog = dataSnapshot.getValue(UserSecurityLog.class);
+                                if (userLog == null) {
+                                    userLog = new UserSecurityLog(0, false, mLoginEmailView.getText().toString());
+                                }
                                 if (!task.isSuccessful()) {
                                     //the creation failed
-                                    if (user.getLoginAttempts() >= 3) {
-                                        user.banUser();
+                                    if (userLog.getLoginAttempts() >= 3) {
+                                        userLog.banUser();
                                         Toast.makeText(LoginActivity.this, "Account locked. Please contact admin", Toast.LENGTH_LONG).show();
                                     } else {
                                         Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                     }
-                                    user.incrementLoginAttempts();
-                                    mDatabase.setValue(user);
+                                    userLog.incrementLoginAttempts();
+                                    mDatabase.setValue(userLog);
                                 } else {
-                                    if (!user.isBanned()) {
+                                    if (!userLog.isBanned()) {
                                         Intent intent = new Intent(getApplicationContext(), LandingActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
@@ -183,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "Account locked. Please contact admin", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                                Log.e("Report", "Successful user");
+                                //Log.e("Report", "Successful user");
                             }
 
                             @Override
