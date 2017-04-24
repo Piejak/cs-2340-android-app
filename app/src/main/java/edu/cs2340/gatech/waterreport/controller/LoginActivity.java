@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("LoginActivity", "mAuth:signIn:onComplete::" + task.isSuccessful());
                         SecurityLogCustom.logLoginAttempt(new Date(), currentUser.getUid(), "Attempt");
                         hideProgress();
-                        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
+                        mDatabase = FirebaseDatabase.getInstance().getReference().child("usersBans").child(currentUser.getUid());
                         ValueEventListener valueEventListener = new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
